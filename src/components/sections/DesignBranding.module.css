@@ -1,0 +1,303 @@
+/* ========== SECTION ========== */
+
+.section {
+  padding: 0px 40px;
+  scroll-margin-top: 100px;
+}
+
+/* ========== HEADER ========== */
+
+.header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+.subtitle {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-style: italic;
+  color: #5A7A70;
+  margin: 12px auto 0;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+
+/* ========== TABS ========== */
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.tab {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #5A7A70;
+  background: none;
+  border: 1.5px solid rgba(45, 74, 67, 0.15);
+  border-radius: 30px;
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  color: #2D4A43;
+  border-color: rgba(45, 74, 67, 0.35);
+  background-color: rgba(45, 74, 67, 0.04);
+}
+
+.tabActive {
+  color: #ffffff;
+  background-color: #2D4A43;
+  border-color: #2D4A43;
+}
+
+.tabActive:hover {
+  color: #ffffff;
+  background-color: #3A5E55;
+  border-color: #3A5E55;
+}
+
+/* ========== GRIDS ========== */
+
+.gridLabels,
+.gridBranding {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.gridLogos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ========== SHARED GRID ITEM ========== */
+
+.gridItem {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  aspect-ratio: 4 / 3;
+}
+
+.gridItem:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gridItem:hover .image {
+  transform: scale(1.05);
+}
+
+/* ========== LOGO CARD ========== */
+
+.logoCard {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.logoCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.logoImageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+}
+
+.logoImage {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.logoCard:hover .logoImage {
+  transform: scale(1.05);
+}
+
+/* ========== HOVER OVERLAY ========== */
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.25) 60%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.gridItem:hover .overlay,
+.logoCard:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.logoDark .overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.15) 60%,
+    transparent 100%
+  );
+}
+
+.overlayName {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.overlayCategory {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ========== TABLET (max-width: 1024px) ========== */
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 60px 24px;
+  }
+
+  .tabs {
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+
+  .tab {
+    font-size: 12px;
+    padding: 8px 20px;
+    letter-spacing: 1px;
+  }
+
+  .gridLabels,
+  .gridBranding {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .gridLogos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .overlayName { font-size: 18px; }
+  .overlayCategory { font-size: 11px; }
+}
+
+/* ========== MOBILE (max-width: 600px) ========== */
+
+@media (max-width: 600px) {
+  .section {
+    padding: 50px 16px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .tab {
+    font-size: 11px;
+    padding: 8px 16px;
+    letter-spacing: 0.8px;
+  }
+
+  .gridLabels,
+  .gridBranding {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gridLogos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .logoCard {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+  }
+
+  .logoImageWrapper {
+    padding: 16px;
+  }
+
+  .gridItem {
+    border-radius: 10px;
+  }
+
+  .overlay {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 14px 16px;
+  }
+
+  .overlayName { font-size: 15px; }
+  .overlayCategory { font-size: 10px; letter-spacing: 1px; }
+}

@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import About from '@/components/sections/About';
 import BooksIntro from '@/components/sections/BooksIntro';
 import BooksSection from '@/components/sections/BooksSection';
-// import DesignBranding from '@/components/sections/DesignBranding';
+import DesignBranding from '@/components/sections/DesignBranding';
 // import Testimonials from '@/components/sections/Testimonials';
 // import Services from '@/components/sections/Services';
 // import Contact from '@/components/sections/Contact';
@@ -20,14 +20,7 @@ export default function HomePage() {
       <About />
       <BooksIntro />
       <BooksSection />
-
-      <section id="design-branding">
-        {/* <DesignBranding /> */}
-        <div style={{ padding: '8rem 2rem', textAlign: 'center' }}>
-          <h2>Design &amp; Branding — Coming Next</h2>
-          <p>Tabbed: Labels, Logos, Branding</p>
-        </div>
-      </section>
+      <DesignBranding />
 
       <section id="testimonials">
         {/* <Testimonials /> */}
