@@ -1,0 +1,12 @@
+# robots.txt for Anastasiia Kolisnyk Portfolio
+# https://akillustrator.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://akillustrator.com/sitemap.xml
+
+# Disallow admin/system paths (if any)
+Disallow: /admin/
+Disallow: /.netlify/

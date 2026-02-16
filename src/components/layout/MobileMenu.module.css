@@ -1,0 +1,277 @@
+/* ========== MOBILE MENU BUTTON ========== */
+
+.menuButton {
+  display: none;
+  position: fixed;
+  top: 35px;
+  right: 20px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  background-color: #2d4a43;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%);
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hamburgerLine {
+  width: 24px;
+  height: 2px;
+  background-color: #c9a86c;
+  display: block;
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* ========== MOBILE MENU PANEL ========== */
+
+.menuPanel {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #2d4a43;
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: clamp(80px, 12vh, 100px);
+  padding-left: clamp(20px, 5vw, 32px);
+  padding-right: clamp(20px, 5vw, 32px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ========== LANGUAGE SWITCHER ========== */
+
+.languageSection {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: clamp(15px, 3vh, 20px);
+  padding-bottom: clamp(10px, 2vh, 15px);
+  border-bottom: 1px solid rgba(201, 168, 108, 0.3);
+}
+
+.languageButton {
+  width: 100%;
+  padding: clamp(10px, 2vh, 14px) 0;
+  background: none;
+  border: none;
+  color: #c9a86c;
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 4vw, 18px);
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.languageButton:hover {
+  color: #ffffff;
+}
+
+.languageList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #243832;
+  overflow: hidden;
+}
+
+.languageItem {
+  width: 100%;
+}
+
+.languageOption {
+  width: 100%;
+  padding: clamp(10px, 2vh, 12px) 0;
+  background: none;
+  border: none;
+  color: #c9a86c;
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 3.5vw, 16px);
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.languageOption:hover {
+  color: #ffffff;
+  background-color: rgba(201, 168, 108, 0.1);
+}
+
+/* ========== MENU LIST ========== */
+
+.menuList {
+  width: 100%;
+  max-width: 320px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuItem {
+  width: 100%;
+}
+
+.menuItemButton {
+  width: 100%;
+  height: clamp(50px, 8vh, 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(201, 168, 108, 0.4);
+  color: #c9a86c;
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 4.5vw, 20px);
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menuItemButton:hover {
+  color: #ffffff;
+}
+
+.active {
+  color: #ffffff;
+}
+
+/* ========== SUBMENU ========== */
+
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #243832;
+  overflow: hidden;
+}
+
+.submenuItem {
+  width: 100%;
+}
+
+.submenuButton {
+  width: 100%;
+  height: clamp(40px, 6vh, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(201, 168, 108, 0.2);
+  color: rgba(201, 168, 108, 0.8);
+  font-family: var(--font-heading);
+  font-size: clamp(13px, 3.5vw, 15px);
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.submenuButton:hover {
+  color: #ffffff;
+}
+
+/* ========== CONTACT BLOCK ========== */
+
+.contactBlock {
+  width: 100%;
+  max-width: 320px;
+  margin-top: clamp(20px, 4vh, 30px);
+  padding-top: clamp(15px, 3vh, 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 2vh, 12px);
+}
+
+.contactLink {
+  color: #c9a86c;
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 3.5vw, 16px);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  text-align: center;
+}
+
+.contactLink:hover {
+  color: #ffffff;
+}
+
+.contactLabel {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.socialLinks {
+  display: flex;
+  gap: clamp(15px, 4vw, 20px);
+  margin-top: clamp(8px, 2vh, 10px);
+}
+
+.socialLink {
+  color: #c9a86c;
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 3.5vw, 16px);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.socialLink:hover {
+  color: #ffffff;
+}
+
+/* ========== SHOW ON MOBILE (max-width: 1024px) ========== */
+
+@media (max-width: 1024px) {
+  .menuButton {
+    display: flex;
+  }
+
+  .menuPanel.open {
+    display: flex;
+  }
+}
+
+/* ========== SMALL PHONES (max-width: 360px) ========== */
+
+@media (max-width: 360px) {
+  .menuPanel {
+    padding-top: 70px;
+  }
+
+  .menuItemButton {
+    font-size: 15px;
+    height: 48px;
+  }
+
+  .submenuButton {
+    font-size: 12px;
+    height: 38px;
+  }
+}

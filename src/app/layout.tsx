@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Cormorant_Garamond, Montserrat } from 'next/font/google';
+import ClientLayout from '@/components/layout/ClientLayout';
 import '@/styles/globals.css';
 
 // Fonts — matching current site exactly
@@ -122,10 +123,7 @@ export default async function RootLayout({
       </head>
       <body>
         <NextIntlClientProvider messages={messages}>
-          {/* Header will go here */}
-          <main>{children}</main>
-          {/* Footer will go here */}
-          {/* Chat widget will go here (lazy loaded) */}
+          <ClientLayout>{children}</ClientLayout>
         </NextIntlClientProvider>
       </body>
     </html>

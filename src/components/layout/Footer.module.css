@@ -1,0 +1,132 @@
+/* ========== FOOTER ========== */
+
+.footer {
+  background-color: #2D4A43;
+  padding: 16px 30px;
+  margin-top: 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: var(--font-heading);
+  font-size: 20px;
+}
+
+/* ========== COPYRIGHT ========== */
+
+.copyright {
+  color: #C9A86C;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* ========== LINKS ========== */
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.link {
+  color: #C9A86C;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+/* ========== LOGO ========== */
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #C9A86C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  color: #2D4A43;
+  font-weight: 600;
+}
+
+/* ========== COPYRIGHT PROTECTION NOTICE ========== */
+
+.copyrightNotice {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(201, 168, 108, 0.15);
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.copyrightText {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: rgba(201, 168, 108, 0.4);
+  line-height: 1.6;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+/* ========== TABLET (max-width: 1024px) ========== */
+
+@media (max-width: 1024px) {
+  .container {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .links {
+    justify-content: center;
+  }
+}
+
+/* ========== MOBILE (max-width: 600px) ========== */
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 24px 20px;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-size: 16px;
+  }
+
+  .copyright {
+    order: 2;
+  }
+
+  .links {
+    order: 1;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .logo {
+    order: 0;
+  }
+
+  .copyrightNotice {
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+
+  .copyrightText {
+    font-size: 10px;
+  }
+}

@@ -1,36 +1,152 @@
 {
-  "meta": {
-    "title": "Anastasiia Kolisnyk | Children's Book Illustrator & Visual Designer",
-    "description": "Children's book illustrator creating warm, heartfelt illustrations"
-  },
-  "nav": {
-    "about": "About Me",
-    "philosophy": "Illustration Philosophy",
-    "books": "Children's Books",
-    "labels": "Label Design",
-    "logos": "Logos",
-    "branding": "Branding",
-    "testimonials": "Testimonials",
+  "menu": {
+    "aboutMe": "About Me",
+    "childrensBooks": "Children's book illustrations",
+    "designBranding": "Design & Branding",
+    "contactMe": "Contact Me",
     "blog": "Blog",
     "services": "Services",
-    "contact": "Contact Me"
+    "testimonials": "Referencie"
+  },
+  "booksIntro": {
+    "title": "Children's Book Illustrations",
+    "subtitle": "Warmth, wonder, and storytelling in every page"
+  },
+  "books": {
+    "nutcracker": "The Nutcracker and the Mouse King",
+    "wildSwans": "The Wild Swans",
+    "winterAdventures": "Winter Adventures",
+    "magicWorld": "Magic World",
+    "sigurd": "Sigurd Fights the Dragon",
+    "seaSecrets": "Secrets of the Sea for Little Explorers"
+  },
+  "about": {
+    "name": "Anastasiia Kolisnyk",
+    "intro": "I'm {name} — an illustrator, designer, and creative entrepreneur based in Trenčín, Slovakia. I create artwork that blends emotional clarity with thoughtful craftsmanship, bringing together illustration, storytelling, multilingual adaptation, and visual identity design.",
+    "work": "My work spans children's books, educational materials, packaging, label design, logos, and print & digital branding. I focus on warm color palettes, intuitive composition, and imagery that feels alive — full of rhythm, sincerity, and gentle wonder.",
+    "goal": "Whether I'm illustrating marine animals for young readers, designing a brand's visual language, or crafting packaging that tells a story, my goal is always the same: to create meaningful, heartfelt visuals that inspire curiosity and connect with people.",
+    "explore": "Explore my portfolio to discover the projects, illustrations, and creative worlds I build with care and imagination."
   },
   "hero": {
     "title": "Children's Book Illustrator & Visual Designer",
     "subtitle": "Creating warm, heartfelt illustrations for stories that matter"
   },
+  "designBranding": {
+    "title": "Design & Branding",
+    "subtitle": "Labels, logos, and visual identity — crafted with care",
+    "tab": {
+      "labels": "Label Design",
+      "logos": "Logos",
+      "branding": "Print & Digital"
+    }
+  },
+  "sections": {
+    "home": {
+      "title": "Professional Illustrator / Graphic Designer"
+    },
+    "about": {
+      "title": "About Me"
+    },
+    "contact": {
+      "title": "Contact Me"
+    }
+  },
+  "contact": {
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "behance": "Behance",
+    "instagram": "Instagram"
+  },
+  "common": {
+    "loading": "Loading...",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "footer": {
+    "copyright": "All illustrations and artwork on this website are protected by international copyright law. Unauthorized reproduction, distribution, or use is strictly prohibited."
+  },
+  "services": {
+    "title": "Services",
+    "intro": "I offer a full range of illustration and design services — from children's book projects to brand identity. Every project is unique, so I tailor my approach to your vision, timeline, and goals. Let's create something meaningful together.",
+    "inquire": "Inquire",
+    "book": {
+      "title": "Children's Book Illustration",
+      "desc": "Full illustration sets for children's books — from initial sketches and character development to final artwork. 24–32 pages, cohesive visual storytelling."
+    },
+    "cover": {
+      "title": "Book Cover Design",
+      "desc": "Eye-catching cover designs that capture the essence of your story and invite readers in. Includes concept development and final print-ready artwork."
+    },
+    "character": {
+      "title": "Character Design",
+      "desc": "Original characters with personality and emotion — designed for books, animation, games, or branding. Includes expression sheets and style guides."
+    },
+    "label": {
+      "title": "Label & Packaging Design",
+      "desc": "Product labels and packaging that stand out on the shelf. Thoughtful composition, harmonious palettes, and clear typography for any product category."
+    },
+    "logo": {
+      "title": "Logo Design",
+      "desc": "Distinctive logos that capture your brand's character and values. From monograms to emblems — timeless marks built with clarity and elegance."
+    },
+    "branding": {
+      "title": "Branding & Print Design",
+      "desc": "Cohesive visual identity across print and digital — business cards, menus, posters, social media templates, and branded merchandise."
+    },
+    "form": {
+      "title": "Let's Work Together",
+      "subtitle": "Tell me about your project and I'll get back to you within 48 hours.",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "projectType": "Project Type",
+      "selectProject": "Select project type...",
+      "timeline": "Timeline",
+      "selectTimeline": "Select timeline...",
+      "less1": "Less than 1 month",
+      "months13": "1–3 months",
+      "months36": "3–6 months",
+      "flexible": "Flexible",
+      "description": "Project Description",
+      "descriptionPlaceholder": "Tell me about your project — what do you need, what's the scope, any preferences for style or format?",
+      "referral": "How did you find me?",
+      "selectReferral": "Select an option...",
+      "referralOption": "Referral",
+      "other": "Other",
+      "submit": "Send Request",
+      "sending": "Sending...",
+      "successTitle": "Thank you!",
+      "successText": "Your request has been received. I'll review it and get back to you within 48 hours.",
+      "error": "Something went wrong. Please try again or contact me directly via email."
+    }
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "subtitle": "What our clients say about working together",
+    "starFood": {
+      "name": "Star Food",
+      "role": "Labels, logo, visual style",
+      "text": "Anastasia created product labels, a company logo, and a comprehensive unified visual style concept for our company. All tasks were completed precisely, systematically, and in accordance with our requirements. We collaborate on a regular basis and recommend Anastasia as a reliable partner with a professional approach."
+    },
+    "baloonParty": {
+      "name": "Baloon Party",
+      "role": "Brandbook, visual identity",
+      "text": "Our collaboration with Anastasia Kolisnyk was conducted at a high professional level. She created a comprehensive brandbook for our company, thoroughly developing the visual identity, structure, and key elements of the corporate style. All project phases were delivered with quality, on schedule, and with attention to detail. We recommend Anastasia as a reliable specialist with a strong sense of systematic and creative work."
+    },
+    "laserCraft": {
+      "name": "Laser Craft",
+      "role": "Logo, corporate design, products",
+      "text": "Anastasia prepared a series of graphic solutions for gift and souvenir products for our company, including logo design and the creation of a unified corporate design concept. Her work was precise, creative, and always delivered on time. We have a long-term collaboration and recommend Anastasia as a reliable and professional partner for graphic and visual projects."
+    }
+  },
   "blog": {
-    "title": "Blog",
-    "readMore": "Read more",
+    "home": "Home",
     "minRead": "min read",
-    "relatedPosts": "You might also enjoy",
     "backToBlog": "Back to Blog",
-    "home": "Home"
-  },
-  "chat": {
-    "placeholder": "Ask about services, pricing, process...",
-    "send": "Send",
-    "greeting": "Hi! I can help you learn about Anastasiia's illustration services. What would you like to know?"
-  },
-  "_note": "PLACEHOLDER — Replace with full en.json from src/locales/en.json in v1 repo"
+    "ctaTitle": "Want to work together?",
+    "ctaText": "I'm available for children's book illustration, branding, and visual design projects.",
+    "ctaButton": "View Services"
+  }
 }
