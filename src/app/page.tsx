@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
-// Sections will be imported as they're built:
-// import About from '@/components/sections/About';
-// import BooksIntro from '@/components/sections/BooksIntro';
+import About from '@/components/sections/About';
+import BooksIntro from '@/components/sections/BooksIntro';
 // import BooksGallery from '@/components/sections/BooksGallery';
 // import DesignBranding from '@/components/sections/DesignBranding';
 // import Testimonials from '@/components/sections/Testimonials';
@@ -18,23 +17,8 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* Section order matches current site menu:
-          About Me → Illustration Philosophy → Children's Books (6 galleries)
-          → Design & Branding (tabbed) → Testimonials → Services → Contact */}
-
-      <section id="about">
-        {/* <About /> */}
-        <div style={{ padding: '8rem 2rem', textAlign: 'center' }}>
-          <h2>About Section — Coming Next</h2>
-        </div>
-      </section>
-
-      <section id="books-intro">
-        {/* <BooksIntro /> */}
-        <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-          <h2>Illustration Philosophy — Coming Next</h2>
-        </div>
-      </section>
+      <About />
+      <BooksIntro />
 
       <section id="books">
         {/* <BooksGallery /> */}

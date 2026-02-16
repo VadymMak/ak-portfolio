@@ -1,0 +1,233 @@
+/* ========== ABOUT SECTION ========== */
+
+.section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(211, 191, 170);
+  scroll-margin-top: 110px;
+}
+
+/* ========== DESKTOP CONTAINER ========== */
+
+.desktopContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1400px;
+  width: 100%;
+}
+
+/* ========== IMAGE WRAPPER (Desktop) ========== */
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.aboutImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========== TEXT OVERLAY (Desktop) ========== */
+
+.textOverlay {
+  position: absolute;
+  top: 28%;
+  left: 36%;
+  width: 50%;
+  height: 48%;
+  padding: 2%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.textContent {
+  font-family: var(--font-heading);
+  font-size: clamp(8px, 1.2vw, 18px);
+  font-style: italic;
+  color: #5C4A3A;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.paragraph {
+  margin-bottom: clamp(3px, 0.5vw, 8px);
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.name {
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ========== MOBILE CONTAINER (Hidden on Desktop) ========== */
+
+.mobileContainer {
+  display: none;
+}
+
+/* ========== DESKTOP MEDIA QUERIES ========== */
+
+@media (max-width: 1500px) {
+  .textContent {
+    font-size: clamp(10px, 1.1vw, 16px);
+  }
+}
+
+@media (max-width: 1350px) {
+  .textContent {
+    font-size: clamp(7px, 1.0vw, 14px);
+  }
+}
+
+@media (max-width: 1060px) {
+  .textContent {
+    font-size: clamp(6px, 1.0vw, 14px);
+  }
+}
+
+/* ========== TABLET (max-width: 1024px) ========== */
+
+@media (max-width: 1024px) {
+  .section {
+    min-height: calc(60vh - 114px);
+    padding: 30px;
+  }
+
+  .textOverlay {
+    top: 30%;
+    left: 36%;
+    width: 50%;
+  }
+
+  .textContent {
+    font-size: clamp(8px, 1.3vw, 14px);
+  }
+}
+
+/* ========== TABLET SMALL (max-width: 900px) ========== */
+
+@media (max-width: 900px) {
+  .textOverlay {
+    top: 29%;
+    left: 35%;
+    width: 52%;
+  }
+
+  .textContent {
+    font-size: clamp(7px, 1.3vw, 12px);
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 820px) {
+  .textContent {
+    font-size: clamp(6px, 1.2vw, 14px);
+    line-height: 1.45;
+  }
+}
+
+/* ========== MOBILE SWITCH (max-width: 768px) ========== */
+
+@media (max-width: 768px) {
+  .desktopContainer {
+    display: none;
+  }
+
+  .mobileContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .section {
+    padding: 0;
+    min-height: auto;
+    background-color: #F5EFE6;
+  }
+
+  .mobileImageWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 30px 40px 0;
+    background-color: rgb(211, 191, 170);
+  }
+
+  .mobileImage {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobileTextWrapper {
+    padding: 40px 30px;
+    background-color: #F5EFE6;
+  }
+
+  .mobileTitleWrapper {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .mobileDescription {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .mobileText {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: #2D4A43;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 16px;
+  }
+
+  .mobileText:last-child {
+    margin-bottom: 0;
+  }
+
+  .name {
+    font-weight: 600;
+    font-style: normal;
+  }
+}
+
+/* ========== MOBILE SMALL (max-width: 480px) ========== */
+
+@media (max-width: 480px) {
+  .mobileImageWrapper {
+    padding: 20px 20px 0;
+  }
+
+  .mobileImage {
+    max-width: 280px;
+  }
+
+  .mobileTextWrapper {
+    padding: 30px 20px;
+  }
+
+  .mobileTitleWrapper {
+    margin-bottom: 24px;
+  }
+
+  .mobileText {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+}
