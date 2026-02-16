@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Cormorant_Garamond, Montserrat } from 'next/font/google';
@@ -104,6 +105,10 @@ export default async function RootLayout({
       translate="no"
       className={`${cormorantGaramond.variable} ${montserrat.variable}`}
     >
+      <Script
+  src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+  strategy="lazyOnload"
+/>
       <head>
         {/* Google Analytics 4 */}
         <script
