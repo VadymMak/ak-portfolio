@@ -6,6 +6,7 @@
   height: 100vh;
   display: flex;
   overflow-x: hidden;
+  background-color: #2D4A43;
 }
 
 .mainContent {
@@ -13,6 +14,26 @@
   height: 100vh;
   overflow-y: auto;
   background-color: #F5EFE6;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 168, 108, 0.3) #2D4A43;
+}
+
+/* Dark scrollbar between content and sidebar */
+.mainContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mainContent::-webkit-scrollbar-track {
+  background: #2D4A43;
+}
+
+.mainContent::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 108, 0.3);
+  border-radius: 3px;
+}
+
+.mainContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 108, 0.5);
 }
 
 /* ========== TABLET & MOBILE (max-width: 1024px) ========== */
