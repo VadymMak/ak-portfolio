@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "Anastasiia Kolisnyk | Children's Book Illustrator & Visual Designer",
+    "description": "Children's book illustrator creating warm, heartfelt illustrations"
+  },
+  "nav": {
+    "about": "About Me",
+    "philosophy": "Illustration Philosophy",
+    "books": "Children's Books",
+    "labels": "Label Design",
+    "logos": "Logos",
+    "branding": "Branding",
+    "testimonials": "Testimonials",
+    "blog": "Blog",
+    "services": "Services",
+    "contact": "Contact Me"
+  },
+  "hero": {
+    "title": "Children's Book Illustrator & Visual Designer",
+    "subtitle": "Creating warm, heartfelt illustrations for stories that matter"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Read more",
+    "minRead": "min read",
+    "relatedPosts": "You might also enjoy",
+    "backToBlog": "Back to Blog",
+    "home": "Home"
+  },
+  "chat": {
+    "placeholder": "Ask about services, pricing, process...",
+    "send": "Send",
+    "greeting": "Hi! I can help you learn about Anastasiia's illustration services. What would you like to know?"
+  },
+  "_note": "PLACEHOLDER — Replace with full en.json from src/locales/en.json in v1 repo"
+}
