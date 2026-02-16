@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import About from '@/components/sections/About';
 import BooksIntro from '@/components/sections/BooksIntro';
-// import BooksGallery from '@/components/sections/BooksGallery';
+import BooksSection from '@/components/sections/BooksSection';
 // import DesignBranding from '@/components/sections/DesignBranding';
 // import Testimonials from '@/components/sections/Testimonials';
 // import Services from '@/components/sections/Services';
@@ -19,14 +19,7 @@ export default function HomePage() {
     <>
       <About />
       <BooksIntro />
-
-      <section id="books">
-        {/* <BooksGallery /> */}
-        <div style={{ padding: '8rem 2rem', textAlign: 'center' }}>
-          <h2>Children&apos;s Books Gallery — Coming Next</h2>
-          <p>6 book sections: Magic World, Nutcracker, Sea Secrets, Sigurd, Wild Swans, Winter Adventures</p>
-        </div>
-      </section>
+      <BooksSection />
 
       <section id="design-branding">
         {/* <DesignBranding /> */}

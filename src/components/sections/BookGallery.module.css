@@ -1,0 +1,235 @@
+/* ========== BOOK GALLERY SECTION ========== */
+
+.section {
+  background-color: #F5EFE6;
+  padding: 40px 40px 60px;
+  scroll-margin-top: 100px;
+}
+
+/* ========== SHARED GRID STYLES ========== */
+
+.grid {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gridItem {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 4 / 3;
+}
+
+.gridItem:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========== VIDEO PLAY OVERLAY ========== */
+
+.playOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.gridItem:hover .playOverlay {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ============================================
+   LAYOUT: DEFAULT — 3 columns
+   Used by: Nutcracker, Wild Swans, Magic World, Sea Secrets
+   ============================================ */
+
+.grid_default {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ============================================
+   LAYOUT: WINTER — 10-column complex grid
+   Used by: Winter Adventures (10 images)
+   ============================================ */
+
+.grid_winter {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+}
+
+/* Row 1: 2 wide spreads */
+.grid_winter .gridItem:nth-child(1),
+.grid_winter .gridItem:nth-child(2) {
+  grid-column: span 5;
+}
+
+/* Row 2: 5 process images */
+.grid_winter .gridItem:nth-child(3),
+.grid_winter .gridItem:nth-child(4),
+.grid_winter .gridItem:nth-child(5),
+.grid_winter .gridItem:nth-child(6),
+.grid_winter .gridItem:nth-child(7) {
+  grid-column: span 2;
+}
+
+/* Row 3: 3 images, equal height */
+.grid_winter .gridItem:nth-child(8) {
+  grid-column: span 4;
+  aspect-ratio: auto;
+}
+
+.grid_winter .gridItem:nth-child(9) {
+  grid-column: span 3;
+  aspect-ratio: auto;
+}
+
+.grid_winter .gridItem:nth-child(10) {
+  grid-column: span 3;
+  aspect-ratio: auto;
+}
+
+/* ============================================
+   LAYOUT: SIGURD — 6-column grid
+   Used by: Sigurd (6 images + 2 videos = 8 items)
+   ============================================ */
+
+.grid_sigurd {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+/* Row 1: items 1-2-3 (span 2 each) */
+.grid_sigurd .gridItem:nth-child(1),
+.grid_sigurd .gridItem:nth-child(2),
+.grid_sigurd .gridItem:nth-child(3) {
+  grid-column: span 2;
+}
+
+/* Row 2: items 4-5 (span 3 each) */
+.grid_sigurd .gridItem:nth-child(4),
+.grid_sigurd .gridItem:nth-child(5) {
+  grid-column: span 3;
+}
+
+/* Row 3: items 6-7-8 (span 2 each) */
+.grid_sigurd .gridItem:nth-child(6),
+.grid_sigurd .gridItem:nth-child(7),
+.grid_sigurd .gridItem:nth-child(8) {
+  grid-column: span 2;
+}
+
+/* ============================================
+   TABLET (max-width: 1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 40px 30px 50px;
+  }
+
+  /* Default: 2 columns */
+  .grid_default {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  /* Winter: 4-column tablet */
+  .grid_winter {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+
+  .grid_winter .gridItem:nth-child(1),
+  .grid_winter .gridItem:nth-child(2) {
+    grid-column: span 2;
+  }
+
+  .grid_winter .gridItem:nth-child(3),
+  .grid_winter .gridItem:nth-child(4),
+  .grid_winter .gridItem:nth-child(5),
+  .grid_winter .gridItem:nth-child(6) {
+    grid-column: span 1;
+  }
+
+  .grid_winter .gridItem:nth-child(7),
+  .grid_winter .gridItem:nth-child(8) {
+    grid-column: span 2;
+  }
+
+  .grid_winter .gridItem:nth-child(9),
+  .grid_winter .gridItem:nth-child(10) {
+    grid-column: span 2;
+  }
+
+  /* Sigurd: 4-column tablet */
+  .grid_sigurd {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+
+  .grid_sigurd .gridItem:nth-child(1),
+  .grid_sigurd .gridItem:nth-child(2),
+  .grid_sigurd .gridItem:nth-child(3),
+  .grid_sigurd .gridItem:nth-child(4),
+  .grid_sigurd .gridItem:nth-child(5),
+  .grid_sigurd .gridItem:nth-child(6),
+  .grid_sigurd .gridItem:nth-child(7),
+  .grid_sigurd .gridItem:nth-child(8) {
+    grid-column: span 2;
+  }
+}
+
+/* ============================================
+   MOBILE (max-width: 600px)
+   ============================================ */
+
+@media (max-width: 600px) {
+  .section {
+    padding: 30px 20px 40px;
+  }
+
+  /* All layouts: single column */
+  .grid_default,
+  .grid_winter,
+  .grid_sigurd {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .grid_default .gridItem,
+  .grid_winter .gridItem,
+  .grid_sigurd .gridItem {
+    grid-column: span 1 !important;
+    aspect-ratio: auto;
+    min-height: 200px;
+  }
+
+  .grid_winter .gridItem:nth-child(8) {
+    aspect-ratio: auto;
+  }
+
+  .image {
+    height: auto;
+  }
+}

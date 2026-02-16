@@ -1,0 +1,118 @@
+/* ========== LIGHTBOX ========== */
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  outline: none;
+}
+
+.content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.video {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 4px;
+}
+
+/* ========== CONTROLS ========== */
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 2001;
+  transition: color 0.3s ease;
+}
+
+.closeBtn:hover {
+  color: #C9A86C;
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 2001;
+}
+
+.navBtn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.prevBtn {
+  left: 20px;
+}
+
+.nextBtn {
+  right: 20px;
+}
+
+.counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+}
+
+/* ========== MOBILE ========== */
+
+@media (max-width: 600px) {
+  .lightbox {
+    padding: 20px;
+  }
+
+  .navBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .prevBtn {
+    left: 10px;
+  }
+
+  .nextBtn {
+    right: 10px;
+  }
+}
