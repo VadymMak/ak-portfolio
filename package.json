@@ -11,23 +11,24 @@
     "generate-embeddings": "npx tsx data/scripts/generate-embeddings.ts"
   },
   "dependencies": {
+    "framer-motion": "^11.18.0",
+    "gray-matter": "^4.0.3",
     "next": "^15.2.0",
+    "next-intl": "^4.1.0",
+    "openai": "^4.80.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "framer-motion": "^11.18.0",
-    "next-intl": "^4.1.0",
-    "gray-matter": "^4.0.3",
+    "react-markdown": "^10.1.0",
     "remark": "^15.0.1",
-    "remark-html": "^16.0.1",
-    "openai": "^4.80.0"
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript": "^5.7.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.2.0",
-    "tsx": "^4.19.0"
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
   }
 }

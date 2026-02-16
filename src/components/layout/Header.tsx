@@ -1,54 +1,51 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, useAnimationControls } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import styles from './Header.module.css';
+
+const SCROLL_THRESHOLD = 15;
 
 export default function Header() {
   const t = useTranslations('hero');
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
-  const controls = useAnimationControls();
+  const ticking = useRef(false);
+
+  const updateHeader = useCallback(() => {
+    const scrollContainer = document.querySelector('[class*="mainContent"]') as HTMLElement;
+    const currentScrollY = scrollContainer?.scrollTop ?? window.scrollY;
+    const scrollDelta = currentScrollY - lastScrollY.current;
+
+    if (currentScrollY < 80) {
+      setIsVisible(true);
+    } else if (scrollDelta > SCROLL_THRESHOLD) {
+      setIsVisible(false);
+    } else if (scrollDelta < -SCROLL_THRESHOLD) {
+      setIsVisible(true);
+    }
+
+    lastScrollY.current = currentScrollY;
+    ticking.current = false;
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get the scroll container (mainContent div)
-      const scrollContainer = document.querySelector('[class*="mainContent"]');
-      const currentScrollY = scrollContainer?.scrollTop || window.scrollY;
-      const scrollDelta = currentScrollY - lastScrollY.current;
-
-      if (currentScrollY < 80) {
-        // Always show at top
-        setIsVisible(true);
-      } else if (scrollDelta > 5) {
-        // Scrolling down — hide
-        setIsVisible(false);
-      } else if (scrollDelta < -5) {
-        // Scrolling up — show
-        setIsVisible(true);
-      }
-
-      lastScrollY.current = currentScrollY;
+      if (ticking.current) return;
+      ticking.current = true;
+      requestAnimationFrame(updateHeader);
     };
 
-    // Listen on the mainContent scroll container
-    const scrollContainer = document.querySelector('[class*="mainContent"]');
+    const scrollContainer = document.querySelector('[class*="mainContent"]') as HTMLElement;
     const target = scrollContainer || window;
 
     target.addEventListener('scroll', handleScroll, { passive: true });
     return () => target.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    controls.start({
-      y: isVisible ? 0 : -100,
-      transition: { duration: 0.3, ease: 'easeInOut' },
-    });
-  }, [isVisible, controls]);
+  }, [updateHeader]);
 
   const scrollToTop = () => {
-    const scrollContainer = document.querySelector('[class*="mainContent"]');
+    const scrollContainer = document.querySelector('[class*="mainContent"]') as HTMLElement;
     if (scrollContainer) {
       scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -57,7 +54,9 @@ export default function Header() {
   };
 
   return (
-    <motion.header className={styles.header} animate={controls}>
+    <header
+      className={`${styles.header} ${isVisible ? '' : styles.headerHidden}`}
+    >
       {/* Logo - Left */}
       <button onClick={scrollToTop} className={styles.logoButton}>
         <motion.div
@@ -73,6 +72,6 @@ export default function Header() {
       <div className={styles.titleWrapper}>
         <h1 className={styles.title}>{t('title')}</h1>
       </div>
-    </motion.header>
+    </header>
   );
 }

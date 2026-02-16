@@ -1,119 +1,77 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
-import type { BlogPost, BlogPostMeta, Locale } from '@/types';
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  cover: string;
+  description: string;
+  tags: string[];
+  content: string;
+  readingTime: number;
+}
 
 const BLOG_DIR = path.join(process.cwd(), 'src/content/blog');
+const SUPPORTED_LANGS = ['en', 'sk', 'ru', 'ua'] as const;
+type Lang = typeof SUPPORTED_LANGS[number];
 
-/**
- * Calculate reading time from content string
- */
-function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
+function estimateReadingTime(text: string): number {
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
 }
 
 /**
- * Get all blog post slugs (folder names in content/blog/)
+ * Get all blog post slugs (folder names)
  */
 export function getAllSlugs(): string[] {
   if (!fs.existsSync(BLOG_DIR)) return [];
-
-  return fs
-    .readdirSync(BLOG_DIR, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name);
+  return fs.readdirSync(BLOG_DIR).filter((name) => {
+    const fullPath = path.join(BLOG_DIR, name);
+    return fs.statSync(fullPath).isDirectory();
+  });
 }
 
 /**
- * Get blog post by slug and locale
- * Falls back to 'en' if requested locale doesn't exist
+ * Get a single blog post by slug and language
  */
-export function getPostBySlug(slug: string, locale: Locale = 'en'): BlogPost | null {
+export function getPost(slug: string, lang: string = 'en'): BlogPost | null {
   const postDir = path.join(BLOG_DIR, slug);
-
   if (!fs.existsSync(postDir)) return null;
 
-  // Try requested locale, fallback to en
-  let filePath = path.join(postDir, `${locale}.md`);
+  // Try requested lang, fall back to en
+  const fileLang = SUPPORTED_LANGS.includes(lang as Lang) ? lang : 'en';
+  let filePath = path.join(postDir, `${fileLang}.md`);
+
   if (!fs.existsSync(filePath)) {
     filePath = path.join(postDir, 'en.md');
   }
   if (!fs.existsSync(filePath)) return null;
 
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(fileContent);
+  const raw = fs.readFileSync(filePath, 'utf-8');
+  const { data, content } = matter(raw);
 
   return {
     slug,
     title: data.title || slug,
     date: data.date || '',
-    description: data.description || '',
     cover: data.cover || '',
-    coverOg: data.coverOg || data.cover || '',
+    description: data.description || '',
     tags: data.tags || [],
-    videos: data.videos || [],
     content,
-    readingTime: calculateReadingTime(content),
+    readingTime: estimateReadingTime(content),
   };
 }
 
 /**
- * Get all posts metadata (for blog list page)
- * Sorted by date descending
+ * Get all posts for a given language, sorted newest first
  */
-export function getAllPosts(locale: Locale = 'en'): BlogPostMeta[] {
+export function getAllPosts(lang: string = 'en'): BlogPost[] {
   const slugs = getAllSlugs();
-
   const posts = slugs
-    .map((slug) => {
-      const post = getPostBySlug(slug, locale);
-      if (!post) return null;
+    .map((slug) => getPost(slug, lang))
+    .filter((p): p is BlogPost => p !== null);
 
-      return {
-        slug: post.slug,
-        title: post.title,
-        date: post.date,
-        description: post.description,
-        cover: post.cover,
-        tags: post.tags,
-        readingTime: post.readingTime,
-      } satisfies BlogPostMeta;
-    })
-    .filter((post): post is BlogPostMeta => post !== null);
-
-  // Sort by date descending
   return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-}
-
-/**
- * Convert markdown content to HTML
- */
-export async function markdownToHtml(markdown: string): Promise<string> {
-  const result = await remark().use(html, { sanitize: false }).process(markdown);
-  return result.toString();
-}
-
-/**
- * Get related posts by matching tags
- */
-export function getRelatedPosts(
-  currentSlug: string,
-  currentTags: string[],
-  locale: Locale = 'en',
-  limit: number = 3
-): BlogPostMeta[] {
-  const allPosts = getAllPosts(locale);
-
-  return allPosts
-    .filter((post) => post.slug !== currentSlug)
-    .map((post) => ({
-      ...post,
-      matchScore: post.tags.filter((tag) => currentTags.includes(tag)).length,
-    }))
-    .sort((a, b) => b.matchScore - a.matchScore)
-    .slice(0, limit);
 }

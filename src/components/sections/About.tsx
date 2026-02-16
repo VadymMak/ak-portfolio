@@ -9,17 +9,9 @@ export default function About() {
   const t = useTranslations('about');
 
   const renderIntro = () => {
-    const intro = t('intro');
-    const name = t('name');
-    const parts = intro.split('{name}');
-
-    return (
-      <>
-        {parts[0]}
-        <strong className={styles.name}>{name}</strong>
-        {parts[1]}
-      </>
-    );
+    return t.rich('intro', {
+      name: () => <strong className={styles.name}>{t('name')}</strong>,
+    });
   };
 
   return (
