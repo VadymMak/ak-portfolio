@@ -27,6 +27,9 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://akillustrator.com"),
+  icons: {
+    icon: "/favicon.svg",
+  },
   title: {
     default:
       "Anastasiia Kolisnyk | Children's Book Illustrator & Visual Designer",
