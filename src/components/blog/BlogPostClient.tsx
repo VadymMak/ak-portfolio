@@ -114,8 +114,18 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
     h3: ({ children }: { children?: React.ReactNode }) => (
       <h3 className={styles.subHeading}>{children}</h3>
     ),
-    p: ({ children, node }: { children?: React.ReactNode; node?: any }) => {
-      if (node?.children?.length === 1 && node.children[0].tagName === "img") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    p: ({
+      children,
+      node,
+    }: {
+      children?: React.ReactNode;
+      node?: Record<string, unknown>;
+    }) => {
+      const nodeChildren = node?.children as
+        | Array<{ tagName?: string }>
+        | undefined;
+      if (nodeChildren?.length === 1 && nodeChildren[0].tagName === "img") {
         return <>{children}</>;
       }
       const text = typeof children === "string" ? children : "";
