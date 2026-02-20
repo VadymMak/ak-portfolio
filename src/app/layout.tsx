@@ -115,24 +115,49 @@ export default async function RootLayout({
         src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
         strategy="lazyOnload"
       />
-      <head>
-        {/* Google Analytics 4 */}
+
+      {/* Google Analytics 4 */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-Q4CMBHFQ2E"
+        strategy="afterInteractive"
+      />
+      <Script id="ga4-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-Q4CMBHFQ2E');
+        `}
+      </Script>
+
+      <body>
         <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-Q4CMBHFQ2E"
-        />
-        <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-Q4CMBHFQ2E');
-            `,
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Anastasiia Kolisnyk",
+              url: "https://akillustrator.com",
+              jobTitle: "Children's Book Illustrator & Visual Designer",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Trenčín",
+                addressCountry: "SK",
+              },
+              sameAs: [
+                "https://www.behance.net/kolisnyk_ak",
+                "https://www.instagram.com/kolisnyk_ak",
+              ],
+              knowsAbout: [
+                "Children's Book Illustration",
+                "Graphic Design",
+                "Brand Identity",
+                "Label Design",
+              ],
+            }),
           }}
         />
-      </head>
-      <body>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <ClientLayout>{children}</ClientLayout>

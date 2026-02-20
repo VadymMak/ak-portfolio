@@ -1,33 +1,34 @@
-import { MetadataRoute } from 'next';
-// import { getAllPosts } from '@/lib/blog';
+import { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://akillustrator.com';
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://ak-portfolio-git-dev-vadymmakevytss-projects.vercel.app";
 
-  // Static pages
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 1,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.8,
     },
   ];
 
-  // Blog posts (uncomment when blog is wired up)
-  // const posts = getAllPosts();
-  // const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
-  //   url: `${baseUrl}/blog/${post.slug}`,
-  //   lastModified: new Date(post.date),
-  //   changeFrequency: 'monthly' as const,
-  //   priority: 0.6,
-  // }));
+  // Blog posts — all locales use same slug
+  const posts = getAllPosts("en");
+  const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
 
-  return [...staticPages /*, ...blogPages */];
+  return [...staticPages, ...blogPages];
 }
