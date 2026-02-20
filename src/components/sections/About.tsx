@@ -22,6 +22,7 @@ export default function About() {
           <ProtectedImage
             src="/gallery/about/about-me_empty.webp"
             alt="About Me"
+            loading="eager"
             className={styles.aboutImage}
           />
 

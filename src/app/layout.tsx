@@ -111,25 +111,6 @@ export default async function RootLayout({
       translate="no"
       className={`${cormorantGaramond.variable} ${montserrat.variable}`}
     >
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        strategy="lazyOnload"
-      />
-
-      {/* Google Analytics 4 */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-Q4CMBHFQ2E"
-        strategy="afterInteractive"
-      />
-      <Script id="ga4-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-Q4CMBHFQ2E');
-        `}
-      </Script>
-
       <body>
         <script
           type="application/ld+json"
@@ -158,6 +139,22 @@ export default async function RootLayout({
             }),
           }}
         />
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+          strategy="lazyOnload"
+        />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-Q4CMBHFQ2E"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-Q4CMBHFQ2E');
+          `}
+        </Script>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <ClientLayout>{children}</ClientLayout>

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { ReactNode, DragEvent, MouseEvent } from 'react';
-import styles from './ProtectedImage.module.css';
+import { ReactNode, DragEvent, MouseEvent } from "react";
+import styles from "./ProtectedImage.module.css";
 
 /**
  * ProtectedImage — wraps any <img> with anti-theft protection:
@@ -21,7 +21,7 @@ interface ProtectedImageProps {
   alt?: string;
   className?: string;
   style?: React.CSSProperties;
-  loading?: 'lazy' | 'eager';
+  loading?: "lazy" | "eager";
   width?: number;
   height?: number;
   [key: string]: unknown;
@@ -30,10 +30,10 @@ interface ProtectedImageProps {
 export default function ProtectedImage({
   children,
   src,
-  alt = '',
-  className = '',
+  alt = "",
+  className = "",
   style = {},
-  loading = 'lazy',
+  loading = "lazy",
   ...imgProps
 }: ProtectedImageProps) {
   const handleContextMenu = (e: MouseEvent) => {
@@ -63,6 +63,8 @@ export default function ProtectedImage({
           draggable="false"
           loading={loading}
           className={`${styles.image} ${className}`}
+          width={imgProps.width || undefined}
+          height={imgProps.height || undefined}
           {...imgProps}
         />
       )}
