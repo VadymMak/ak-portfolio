@@ -38,11 +38,18 @@ export default function ChatWidget() {
     }
   }, [isOpen]);
 
-  // Add welcome message on first open
-  const handleOpen = useCallback(() => {
-    setIsOpen(true);
-    if (!hasInteracted) {
-      setHasInteracted(true);
+  // Update welcome message when locale changes
+  useEffect(() => {
+    setMessages((prev) =>
+      prev.map((m) =>
+        m.id === "welcome" ? { ...m, content: WELCOME_MESSAGES[lang] } : m,
+      ),
+    );
+  }, [lang]);
+
+  // Show welcome message on first open
+  useEffect(() => {
+    if (hasInteracted && messages.length === 0) {
       setMessages([
         {
           id: "welcome",
@@ -51,7 +58,15 @@ export default function ChatWidget() {
         },
       ]);
     }
-  }, [hasInteracted, lang]);
+  }, [hasInteracted, lang, messages.length]);
+
+  // Open chat handler
+  const handleOpen = useCallback(() => {
+    setIsOpen(true);
+    if (!hasInteracted) {
+      setHasInteracted(true);
+    }
+  }, [hasInteracted]);
 
   const sendMessage = useCallback(
     async (text: string) => {

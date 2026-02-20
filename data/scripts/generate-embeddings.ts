@@ -1,150 +1,119 @@
-/**
- * Generate vector embeddings for AI chat RAG pipeline
- *
- * Usage:
- *   OPENAI_API_KEY=sk-your-key pnpm generate-embeddings
- *
- * Generates: data/embeddings.json (~800KB)
- * Re-run after content updates.
- */
+// scripts/generate-embeddings.ts
+// Run: npx tsx scripts/generate-embeddings.ts
+// Requires: OPENAI_API_KEY in .env.local
 
-import fs from 'fs';
-import path from 'path';
+import { config } from "dotenv";
+import { writeFileSync, readFileSync, existsSync } from "fs";
+import { resolve } from "path";
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+// Load .env.local
+config({ path: resolve(process.cwd(), ".env.local") });
 
-if (!OPENAI_API_KEY) {
-  console.error('❌ OPENAI_API_KEY is required');
-  process.exit(1);
+interface ContentChunk {
+  id: string;
+  category: string;
+  content: string;
 }
 
-// Content chunks about Anastasiia's services, portfolio, and process
-// These will be the knowledge base for the AI chat
-const contentChunks = [
-  {
-    id: 'services-overview',
-    content: `Anastasiia Kolisnyk offers the following illustration and design services:
-1. Full Children's Book Illustration (24-32 pages) — starting from $3,500, timeline 6-10 weeks
-2. Book Cover Illustration — full cover with spine and back, starting from $400, timeline 1-2 weeks
-3. Single Custom Illustration — for any purpose, starting from $150, timeline 3-7 days
-4. Character Design — 3 poses + expressions + color palette, starting from $250, timeline 1 week
-5. Label & Packaging Design — custom pricing based on complexity
-6. Brand Identity & Logo Design — custom pricing based on scope`,
-    category: 'services',
-  },
-  {
-    id: 'about-artist',
-    content: `Anastasiia Kolisnyk is a children's book illustrator and visual designer based in Trenčín, Slovakia. She creates warm, heartfelt illustrations for picture books, covers, and characters. She also specializes in branding, label design, and visual identity. She works with clients across Europe and communicates in English, Slovak, Russian, and Ukrainian.`,
-    category: 'about',
-  },
-  {
-    id: 'portfolio-books',
-    content: `Anastasiia's portfolio includes several children's book projects:
-- Magic World — a fantasy world with magical creatures
-- The Nutcracker — classic fairy tale illustrations
-- Sea Secrets — underwater adventure illustrations
-- Sigurd — Viking/Norse mythology themed illustrations with dragons and dwarves
-- Wild Swans — Hans Christian Andersen fairy tale
-- Winter Adventures — winter-themed children's illustrations
-Each project showcases her warm, detailed illustration style with rich colors and expressive characters.`,
-    category: 'portfolio',
-  },
-  {
-    id: 'process',
-    content: `Anastasiia's working process:
-1. Brief — discuss the project scope, style, timeline, and budget
-2. Sketches — initial concept sketches and character designs for approval
-3. Feedback — client reviews sketches and provides feedback
-4. Revisions — adjustments based on feedback (typically 2-3 rounds included)
-5. Final artwork — polished, publication-ready illustrations
-6. File delivery — files in required formats (print-ready PDF, PNG, PSD)
-Communication happens via email or WhatsApp. She typically responds within 24 hours.`,
-    category: 'process',
-  },
-  {
-    id: 'clients',
-    content: `Notable clients include:
-- Star Food — food product label and packaging design
-- Baloon Party — event branding and visual identity
-- Laser Craft Wood — logo and brand identity design
-All three are ongoing partnerships with positive testimonials.`,
-    category: 'clients',
-  },
-  {
-    id: 'contact',
-    content: `To contact Anastasiia:
-- Email: akolesnykl989@gmail.com
-- WhatsApp: +421 951 813 809
-- Website contact form: akillustrator.com (Services section)
-She is based in Trenčín, Slovakia and works remotely with clients worldwide.
-Best way to start: fill out the contact form with your project details, or send a WhatsApp message.`,
-    category: 'contact',
-  },
-  // Add more chunks as needed: pricing details, FAQ, style description, etc.
-];
-
-interface EmbeddingResult {
+interface EmbeddingEntry {
   id: string;
+  category: string;
   content: string;
   embedding: number[];
-  metadata: { category: string };
 }
 
-async function generateEmbedding(text: string): Promise<number[]> {
-  const response = await fetch('https://api.openai.com/v1/embeddings', {
-    method: 'POST',
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const MODEL = "text-embedding-3-small"; // Cheapest, 1536 dimensions
+const BATCH_SIZE = 20;
+
+async function getEmbeddings(texts: string[]): Promise<number[][]> {
+  const response = await fetch("https://api.openai.com/v1/embeddings", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'text-embedding-3-small',
-      input: text,
+      model: MODEL,
+      input: texts,
     }),
   });
 
-  const data = await response.json();
-
-  if (data.error) {
-    throw new Error(`OpenAI API error: ${data.error.message}`);
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`OpenAI API error: ${error}`);
   }
 
-  return data.data[0].embedding;
+  const data = await response.json();
+  return data.data.map((item: { embedding: number[] }) => item.embedding);
 }
 
 async function main() {
-  console.log(`🔄 Generating embeddings for ${contentChunks.length} content chunks...`);
-
-  const results: EmbeddingResult[] = [];
-
-  for (const chunk of contentChunks) {
-    process.stdout.write(`  📝 ${chunk.id}...`);
-    const embedding = await generateEmbedding(chunk.content);
-    results.push({
-      id: chunk.id,
-      content: chunk.content,
-      embedding,
-      metadata: { category: chunk.category },
-    });
-    console.log(' ✅');
-
-    // Small delay to respect rate limits
-    await new Promise((resolve) => setTimeout(resolve, 200));
+  if (!OPENAI_API_KEY) {
+    console.error("❌ OPENAI_API_KEY not found in .env.local");
+    process.exit(1);
   }
 
-  const output = {
-    chunks: results,
-    model: 'text-embedding-3-small',
-    dimensions: results[0]?.embedding.length || 1536,
-    generatedAt: new Date().toISOString(),
-    totalChunks: results.length,
-  };
+  console.log("📦 Loading content chunks...");
 
-  const outputPath = path.join(process.cwd(), 'data/embeddings.json');
-  fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
+  // Import chunks dynamically
+  const chunksPath = resolve(process.cwd(), "data/chunks.ts");
+  if (!existsSync(chunksPath)) {
+    console.error("❌ data/chunks.ts not found");
+    process.exit(1);
+  }
 
-  const fileSizeKB = Math.round(fs.statSync(outputPath).size / 1024);
-  console.log(`\n✅ Done! Generated ${results.length} embeddings → data/embeddings.json (${fileSizeKB}KB)`);
+  // Read and parse chunks file
+  const chunksSource = readFileSync(chunksPath, "utf-8");
+  // Extract the array using regex (simple approach for TS file)
+  const chunksMatch = chunksSource.match(
+    /export const chunks:\s*ContentChunk\[\]\s*=\s*(\[[\s\S]*\]);/,
+  );
+  if (!chunksMatch) {
+    console.error("❌ Could not parse chunks from data/chunks.ts");
+    process.exit(1);
+  }
+
+  // Eval the array (safe since we control the file)
+  const chunks: ContentChunk[] = eval(chunksMatch[1]);
+  console.log(`📝 Found ${chunks.length} chunks`);
+
+  const results: EmbeddingEntry[] = [];
+
+  // Process in batches
+  for (let i = 0; i < chunks.length; i += BATCH_SIZE) {
+    const batch = chunks.slice(i, i + BATCH_SIZE);
+    const texts = batch.map((c) => c.content);
+
+    console.log(
+      `🔄 Generating embeddings for batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(chunks.length / BATCH_SIZE)}...`,
+    );
+
+    const embeddings = await getEmbeddings(texts);
+
+    for (let j = 0; j < batch.length; j++) {
+      results.push({
+        id: batch[j].id,
+        category: batch[j].category,
+        content: batch[j].content,
+        embedding: embeddings[j],
+      });
+    }
+
+    // Small delay between batches to respect rate limits
+    if (i + BATCH_SIZE < chunks.length) {
+      await new Promise((r) => setTimeout(r, 200));
+    }
+  }
+
+  // Save to data/embeddings.json
+  const outputPath = resolve(process.cwd(), "data/embeddings.json");
+  writeFileSync(outputPath, JSON.stringify(results, null, 0));
+
+  const fileSizeKB = Math.round(readFileSync(outputPath).length / 1024);
+  console.log(`\n✅ Generated ${results.length} embeddings`);
+  console.log(`📁 Saved to data/embeddings.json (${fileSizeKB} KB)`);
+  console.log(`🧮 Dimensions: ${results[0]?.embedding.length}`);
 }
 
 main().catch(console.error);

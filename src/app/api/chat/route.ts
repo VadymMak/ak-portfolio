@@ -1,18 +1,20 @@
 // src/app/api/chat/route.ts
 import { NextRequest } from "next/server";
 import { SYSTEM_PROMPT } from "@/lib/chat-context";
+import { searchContext, formatContext } from "@/lib/rag";
 
-export const runtime = "edge";
+// Note: removed "edge" runtime — need Node.js for JSON import in rag.ts
+export const dynamic = "force-dynamic";
 
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
 }
 
-// Simple rate limiting using Map (resets on cold start, good enough for hobby tier)
+// Simple rate limiting
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 20; // messages per window
-const RATE_WINDOW = 60 * 60 * 1000; // 1 hour
+const RATE_LIMIT = 20;
+const RATE_WINDOW = 60 * 60 * 1000;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
@@ -53,8 +55,26 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Limit conversation history to last 10 messages to save tokens
+    // Limit conversation history
     const recentMessages = messages.slice(-10);
+
+    // RAG: Get relevant context for the latest user message
+    const lastUserMessage = [...recentMessages]
+      .reverse()
+      .find((m) => m.role === "user");
+
+    let ragContext = "";
+    if (lastUserMessage) {
+      try {
+        const results = await searchContext(lastUserMessage.content, 4, 0.3);
+        ragContext = formatContext(results);
+      } catch (err) {
+        console.error("RAG search failed, continuing without context:", err);
+      }
+    }
+
+    // Build system prompt with RAG context
+    const enhancedPrompt = SYSTEM_PROMPT + ragContext;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -65,7 +85,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: enhancedPrompt },
           ...recentMessages,
         ],
         stream: true,
@@ -123,7 +143,7 @@ export async function POST(req: NextRequest) {
                   controller.enqueue(encoder.encode(content));
                 }
               } catch {
-                // Skip malformed JSON chunks
+                // Skip malformed JSON
               }
             }
           }
