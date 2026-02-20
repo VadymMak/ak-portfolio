@@ -1,121 +1,134 @@
-import { NextRequest, NextResponse } from 'next/server';
+// src/app/api/chat/route.ts
+import { NextRequest } from "next/server";
+import { SYSTEM_PROMPT } from "@/lib/chat-context";
 
-// Rate limiting map
-const rateLimit = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 10; // messages per minute
-const RATE_WINDOW = 60 * 1000; // 1 minute
+export const runtime = "edge";
 
-function checkRateLimit(ip: string): boolean {
+interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+// Simple rate limiting using Map (resets on cold start, good enough for hobby tier)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 20; // messages per window
+const RATE_WINDOW = 60 * 60 * 1000; // 1 hour
+
+function isRateLimited(ip: string): boolean {
   const now = Date.now();
-  const record = rateLimit.get(ip);
+  const entry = rateLimitMap.get(ip);
 
-  if (!record || now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
-    return true;
-  }
-
-  if (record.count >= RATE_LIMIT) {
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
     return false;
   }
 
-  record.count++;
-  return true;
+  entry.count++;
+  return entry.count > RATE_LIMIT;
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    // Rate limiting
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "anonymous";
 
-    if (!checkRateLimit(ip)) {
-      return NextResponse.json(
-        { error: 'Too many messages. Please wait a moment.' },
-        { status: 429 }
+    if (isRateLimited(ip)) {
+      return new Response(
+        JSON.stringify({
+          error: "Too many messages. Please try again later.",
+        }),
+        { status: 429, headers: { "Content-Type": "application/json" } },
       );
     }
 
-    const { message } = await request.json();
+    const { messages } = (await req.json()) as { messages: ChatMessage[] };
 
-    if (!message || typeof message !== 'string') {
-      return NextResponse.json(
-        { error: 'Message is required' },
-        { status: 400 }
-      );
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "No messages provided" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    // TODO: Implement RAG pipeline
-    // 1. Generate embedding for user message
-    // 2. Cosine similarity search against content chunks
-    // 3. Build system prompt with relevant context
-    // 4. Stream response from OpenAI
+    // Limit conversation history to last 10 messages to save tokens
+    const recentMessages = messages.slice(-10);
 
-    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-
-    if (!OPENAI_API_KEY) {
-      return NextResponse.json(
-        { error: 'Chat is currently unavailable' },
-        { status: 503 }
-      );
-    }
-
-    // Placeholder: direct OpenAI call (will add RAG context later)
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        stream: true,
-        max_tokens: 500,
+        model: "gpt-4o-mini",
         messages: [
-          {
-            role: 'system',
-            content: `You are a helpful assistant on the portfolio website of Anastasiia Kolisnyk, 
-a children's book illustrator and visual designer based in Trenčín, Slovakia. 
-You help potential clients learn about her services, process, pricing, and portfolio.
-Be warm, professional, and concise. Respond in the same language the user writes in.
-Supported languages: English, Slovak, Russian, Ukrainian.`,
-          },
-          { role: 'user', content: message },
+          { role: "system", content: SYSTEM_PROMPT },
+          ...recentMessages,
         ],
+        stream: true,
+        temperature: 0.7,
+        max_tokens: 500,
       }),
     });
 
+    if (!response.ok) {
+      const error = await response.text();
+      console.error("OpenAI API error:", error);
+      return new Response(
+        JSON.stringify({ error: "AI service temporarily unavailable" }),
+        { status: 502, headers: { "Content-Type": "application/json" } },
+      );
+    }
+
     // Stream the response
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+
     const stream = new ReadableStream({
       async start(controller) {
         const reader = response.body?.getReader();
-        const decoder = new TextDecoder();
-
         if (!reader) {
           controller.close();
           return;
         }
+
+        let buffer = "";
 
         try {
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
 
-            const chunk = decoder.decode(value);
-            const lines = chunk.split('\n').filter((line) => line.startsWith('data: '));
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
 
             for (const line of lines) {
-              const data = line.replace('data: ', '');
-              if (data === '[DONE]') continue;
+              const trimmed = line.trim();
+              if (!trimmed || !trimmed.startsWith("data: ")) continue;
+
+              const data = trimmed.slice(6);
+              if (data === "[DONE]") {
+                controller.close();
+                return;
+              }
 
               try {
                 const parsed = JSON.parse(data);
                 const content = parsed.choices?.[0]?.delta?.content;
                 if (content) {
-                  controller.enqueue(new TextEncoder().encode(content));
+                  controller.enqueue(encoder.encode(content));
                 }
               } catch {
-                // Skip malformed chunks
+                // Skip malformed JSON chunks
               }
             }
           }
+        } catch (err) {
+          console.error("Stream error:", err);
         } finally {
           controller.close();
         }
@@ -124,16 +137,16 @@ Supported languages: English, Slovak, Russian, Ukrainian.`,
 
     return new Response(stream, {
       headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-        'Cache-Control': 'no-cache',
-        Connection: 'keep-alive',
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
       },
     });
   } catch (error) {
-    console.error('Chat API error:', error);
-    return NextResponse.json(
-      { error: 'Something went wrong' },
-      { status: 500 }
-    );
+    console.error("Chat API error:", error);
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
