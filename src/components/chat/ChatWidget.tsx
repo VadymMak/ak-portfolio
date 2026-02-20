@@ -12,6 +12,38 @@ interface Message {
   content: string;
 }
 
+// Simple markdown-like formatting for assistant messages
+function formatMessage(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  const lines = text.split("\n");
+
+  lines.forEach((line, lineIdx) => {
+    // Bold: **text**
+    const boldRegex = /\*\*(.+?)\*\*/g;
+    let lastIndex = 0;
+    const segments: React.ReactNode[] = [];
+    let match;
+
+    while ((match = boldRegex.exec(line)) !== null) {
+      if (match.index > lastIndex) {
+        segments.push(line.slice(lastIndex, match.index));
+      }
+      segments.push(
+        <strong key={`b-${lineIdx}-${match.index}`}>{match[1]}</strong>,
+      );
+      lastIndex = match.index + match[0].length;
+    }
+    if (lastIndex < line.length) {
+      segments.push(line.slice(lastIndex));
+    }
+
+    if (lineIdx > 0) parts.push(<br key={`br-${lineIdx}`} />);
+    parts.push(...segments);
+  });
+
+  return parts;
+}
+
 export default function ChatWidget() {
   const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +100,17 @@ export default function ChatWidget() {
     }
   }, [hasInteracted]);
 
+  // Clear chat history
+  const handleClear = useCallback(() => {
+    setMessages([
+      {
+        id: "welcome",
+        role: "assistant",
+        content: WELCOME_MESSAGES[lang],
+      },
+    ]);
+  }, [lang]);
+
   const sendMessage = useCallback(
     async (text: string) => {
       if (!text.trim() || isLoading) return;
@@ -90,7 +133,7 @@ export default function ChatWidget() {
 
       try {
         const chatHistory = [...messages, userMessage]
-          .filter((m) => m.id !== "welcome" || m.role === "assistant")
+          .filter((m) => m.id !== "welcome")
           .map(({ role, content }) => ({ role, content }));
 
         const response = await fetch("/api/chat", {
@@ -175,6 +218,7 @@ export default function ChatWidget() {
   };
 
   const showSuggestions = messages.length <= 1 && !isLoading;
+  const showClear = messages.length > 1;
 
   return (
     <>
@@ -236,23 +280,55 @@ export default function ChatWidget() {
                   </div>
                 </div>
               </div>
-              <button
-                className={styles.closeBtn}
-                onClick={() => setIsOpen(false)}
-                aria-label="Close chat"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
+              <div className={styles.headerActions}>
+                {/* Clear History */}
+                {showClear && (
+                  <button
+                    className={styles.clearBtn}
+                    onClick={handleClear}
+                    aria-label="Clear chat"
+                    title={
+                      lang === "ru"
+                        ? "Очистить чат"
+                        : lang === "ua"
+                          ? "Очистити чат"
+                          : lang === "sk"
+                            ? "Vymazať chat"
+                            : "Clear chat"
+                    }
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                  </button>
+                )}
+                {/* Close */}
+                <button
+                  className={styles.closeBtn}
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Close chat"
                 >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             {/* Messages */}
@@ -267,7 +343,13 @@ export default function ChatWidget() {
                   }`}
                 >
                   <div className={styles.messageBubble}>
-                    {msg.content || (
+                    {msg.content ? (
+                      msg.role === "assistant" ? (
+                        <span>{formatMessage(msg.content)}</span>
+                      ) : (
+                        msg.content
+                      )
+                    ) : (
                       <span className={styles.typing}>
                         <span />
                         <span />
