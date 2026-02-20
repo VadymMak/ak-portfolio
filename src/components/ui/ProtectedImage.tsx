@@ -69,7 +69,7 @@ export default function ProtectedImage({
         />
       )}
       {/* Transparent overlay - "Save Image As" saves this, not the image */}
-      <div className={styles.overlay} aria-hidden="true" />
+      <div className={styles.overlay} aria-hidden="true" tabIndex={-1} />
       {/* Invisible watermark - visible only when contrast is increased */}
       <div className={styles.watermark} aria-hidden="true">
         {Array(6)
