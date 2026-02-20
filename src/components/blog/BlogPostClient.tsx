@@ -1,21 +1,30 @@
-'use client';
+"use client";
 
-import { useRef, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import { motion } from 'framer-motion';
-import { useTranslations, useLocale } from 'next-intl';
-import ProtectedImage from '@/components/ui/ProtectedImage';
-import type { BlogPost } from '@/lib/blog';
-import styles from './BlogPost.module.css';
+import { useRef, useEffect } from "react";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { motion } from "framer-motion";
+import { useTranslations, useLocale } from "next-intl";
+import ProtectedImage from "@/components/ui/ProtectedImage";
+import type { BlogPost } from "@/lib/blog";
+import styles from "./BlogPost.module.css";
 
 function formatDate(dateStr: string, locale: string): string {
   const date = new Date(dateStr);
-  const loc = locale === 'sk' ? 'sk-SK'
-    : locale === 'ua' ? 'uk-UA'
-    : locale === 'ru' ? 'ru-RU'
-    : 'en-US';
-  return date.toLocaleDateString(loc, { year: 'numeric', month: 'long', day: 'numeric' });
+  const loc =
+    locale === "sk"
+      ? "sk-SK"
+      : locale === "ua"
+        ? "uk-UA"
+        : locale === "ru"
+          ? "ru-RU"
+          : "en-US";
+  return date.toLocaleDateString(loc, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 interface BlogPostClientProps {
@@ -23,13 +32,15 @@ interface BlogPostClientProps {
 }
 
 export default function BlogPostClient({ post }: BlogPostClientProps) {
-  const t = useTranslations('blog');
-  const tMenu = useTranslations('menu');
+  const t = useTranslations("blog");
+  const tMenu = useTranslations("menu");
   const locale = useLocale();
   const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = document.querySelector('[class*="mainContent"]') as HTMLElement;
+    const container = document.querySelector(
+      '[class*="mainContent"]',
+    ) as HTMLElement;
     if (!container) return;
 
     let ticking = false;
@@ -40,7 +51,8 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
       requestAnimationFrame(() => {
         const scrollTop = container.scrollTop;
         const scrollHeight = container.scrollHeight - container.clientHeight;
-        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        const progress =
+          scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
         if (progressRef.current) {
           progressRef.current.style.width = `${progress}%`;
         }
@@ -48,13 +60,15 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
       });
     };
 
-    container.addEventListener('scroll', handleScroll, { passive: true });
-    return () => container.removeEventListener('scroll', handleScroll);
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Scroll to top on mount
   useEffect(() => {
-    const container = document.querySelector('[class*="mainContent"]') as HTMLElement;
+    const container = document.querySelector(
+      '[class*="mainContent"]',
+    ) as HTMLElement;
     if (container) container.scrollTo(0, 0);
   }, [post.slug]);
 
@@ -65,8 +79,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
       const isVideo = src && /\.(mp4|webm|mov)$/i.test(src);
 
       if (isVideo) {
-        // Derive both formats from the source
-        const base = src.replace(/\.[^.]+$/, '');
+        const base = src.replace(/\.[^.]+$/, "");
         return (
           <figure className={styles.figure}>
             <video
@@ -87,8 +100,8 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
       return (
         <figure className={styles.figure}>
           <ProtectedImage
-            src={src || ''}
-            alt={alt || ''}
+            src={src || ""}
+            alt={alt || ""}
             className={styles.contentImage}
           />
           {alt && <figcaption className={styles.caption}>{alt}</figcaption>}
@@ -98,19 +111,20 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
     h2: ({ children }: { children?: React.ReactNode }) => (
       <h2 className={styles.sectionHeading}>{children}</h2>
     ),
+    h3: ({ children }: { children?: React.ReactNode }) => (
+      <h3 className={styles.subHeading}>{children}</h3>
+    ),
     p: ({ children, node }: { children?: React.ReactNode; node?: any }) => {
-      // If paragraph contains only an image, don't wrap in <p>
-      // (ReactMarkdown wraps ![img]() in <p>, but <figure> can't be inside <p>)
-      if (node?.children?.length === 1 && node.children[0].tagName === 'img') {
+      if (node?.children?.length === 1 && node.children[0].tagName === "img") {
         return <>{children}</>;
       }
-      const text = typeof children === 'string' ? children : '';
-      if (text.includes('PLACEHOLDER')) return null;
+      const text = typeof children === "string" ? children : "";
+      if (text.includes("PLACEHOLDER")) return null;
       return <p>{children}</p>;
     },
     a: ({ href, children }: { href?: string; children?: React.ReactNode }) => {
       // PDF download links → styled button
-      if (href && href.endsWith('.pdf')) {
+      if (href && href.endsWith(".pdf")) {
         return (
           <a
             href={href}
@@ -124,9 +138,17 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
         );
       }
       // Internal blog links
-      if (href && href.startsWith('/blog/')) {
+      if (href && href.startsWith("/blog/")) {
         return (
           <Link href={href} className={styles.inlineLink}>
+            {children}
+          </Link>
+        );
+      }
+      // Hash links (e.g. #services → /#services)
+      if (href && href.startsWith("#")) {
+        return (
+          <Link href={`/${href}`} className={styles.inlineLink}>
             {children}
           </Link>
         );
@@ -145,6 +167,31 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
     em: ({ children }: { children?: React.ReactNode }) => (
       <em className={styles.italic}>{children}</em>
     ),
+    // Table renderers (GFM)
+    table: ({ children }: { children?: React.ReactNode }) => (
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>{children}</table>
+      </div>
+    ),
+    thead: ({ children }: { children?: React.ReactNode }) => (
+      <thead className={styles.thead}>{children}</thead>
+    ),
+    th: ({ children }: { children?: React.ReactNode }) => (
+      <th className={styles.th}>{children}</th>
+    ),
+    td: ({ children }: { children?: React.ReactNode }) => (
+      <td className={styles.td}>{children}</td>
+    ),
+    // List renderers
+    ul: ({ children }: { children?: React.ReactNode }) => (
+      <ul className={styles.list}>{children}</ul>
+    ),
+    ol: ({ children }: { children?: React.ReactNode }) => (
+      <ol className={styles.listOrdered}>{children}</ol>
+    ),
+    li: ({ children }: { children?: React.ReactNode }) => (
+      <li className={styles.listItem}>{children}</li>
+    ),
   };
 
   return (
@@ -153,7 +200,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
       <div
         ref={progressRef}
         className={styles.progressBar}
-        style={{ width: '0%' }}
+        style={{ width: "0%" }}
         role="progressbar"
       />
 
@@ -161,11 +208,11 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
         {/* Breadcrumb */}
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
           <Link href="/" className={styles.breadcrumbLink}>
-            {t('home')}
+            {t("home")}
           </Link>
           <span className={styles.breadcrumbSep}>→</span>
           <Link href="/blog" className={styles.breadcrumbLink}>
-            {tMenu('blog')}
+            {tMenu("blog")}
           </Link>
           <span className={styles.breadcrumbSep}>→</span>
           <span className={styles.breadcrumbCurrent}>{post.title}</span>
@@ -195,13 +242,15 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
           <div className={styles.headerMeta}>
             <time dateTime={post.date}>{formatDate(post.date, locale)}</time>
             <span className={styles.readTime}>
-              {post.readingTime} {t('minRead')}
+              {post.readingTime} {t("minRead")}
             </span>
           </div>
           <h1 className={styles.title}>{post.title}</h1>
           <div className={styles.tags}>
             {post.tags.map((tag) => (
-              <span key={tag} className={styles.tag}>{tag}</span>
+              <span key={tag} className={styles.tag}>
+                {tag}
+              </span>
             ))}
           </div>
         </motion.header>
@@ -213,7 +262,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <ReactMarkdown components={components}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
             {post.content}
           </ReactMarkdown>
         </motion.div>
@@ -225,17 +274,17 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <h3 className={styles.ctaTitle}>{t('ctaTitle')}</h3>
-          <p className={styles.ctaText}>{t('ctaText')}</p>
+          <h3 className={styles.ctaTitle}>{t("ctaTitle")}</h3>
+          <p className={styles.ctaText}>{t("ctaText")}</p>
           <Link href="/#services" className={styles.ctaButton}>
-            {t('ctaButton')}
+            {t("ctaButton")}
           </Link>
         </motion.div>
 
         {/* Back to Blog */}
         <div className={styles.backWrap}>
           <Link href="/blog" className={styles.backLink}>
-            ← {t('backToBlog')}
+            ← {t("backToBlog")}
           </Link>
         </div>
       </article>

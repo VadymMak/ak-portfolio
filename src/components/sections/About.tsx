@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import SectionTitle from '../ui/SectionTitle';
-import ProtectedImage from '../ui/ProtectedImage';
-import styles from './About.module.css';
+import { useTranslations } from "next-intl";
+import SectionTitle from "../ui/SectionTitle";
+import ProtectedImage from "../ui/ProtectedImage";
+import styles from "./About.module.css";
 
 export default function About() {
-  const t = useTranslations('about');
+  const t = useTranslations("about");
 
-  const renderIntro = () => {
-    return t.rich('intro', {
-      name: () => <strong className={styles.name}>{t('name')}</strong>,
-    });
-  };
+  const renderIntro = t.rich("intro", {
+    name: (chunks: React.ReactNode) => (
+      <strong className={styles.name}>{chunks}</strong>
+    ),
+  });
 
   return (
     <section id="about" className={styles.section}>
@@ -27,10 +27,10 @@ export default function About() {
 
           <div className={styles.textOverlay}>
             <div className={styles.textContent}>
-              <p className={styles.paragraph}>{renderIntro()}</p>
-              <p className={styles.paragraph}>{t('work')}</p>
-              <p className={styles.paragraph}>{t('goal')}</p>
-              <p className={styles.paragraph}>{t('explore')}</p>
+              <p className={styles.paragraph}>{renderIntro}</p>
+              <p className={styles.paragraph}>{t("work")}</p>
+              <p className={styles.paragraph}>{t("goal")}</p>
+              <p className={styles.paragraph}>{t("explore")}</p>
             </div>
           </div>
         </div>
@@ -54,10 +54,10 @@ export default function About() {
           </div>
 
           <div className={styles.mobileDescription}>
-            <p className={styles.mobileText}>{renderIntro()}</p>
-            <p className={styles.mobileText}>{t('work')}</p>
-            <p className={styles.mobileText}>{t('goal')}</p>
-            <p className={styles.mobileText}>{t('explore')}</p>
+            <p className={styles.mobileText}>{renderIntro}</p>
+            <p className={styles.mobileText}>{t("work")}</p>
+            <p className={styles.mobileText}>{t("goal")}</p>
+            <p className={styles.mobileText}>{t("explore")}</p>
           </div>
         </div>
       </div>
