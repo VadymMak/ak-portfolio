@@ -32,7 +32,7 @@
 .descriptionText {
   font-family: var(--font-heading);
   font-size: 16px;
-  color: #2D4A43;
+  color: var(--color-theme);
   line-height: 1.8;
   text-align: justify;
 }
@@ -48,7 +48,7 @@
 /* ========== CARD ========== */
 
 .card {
-  background-color: #F9F6F0;
+  background-color: var(--color-bg);
   border: 1px solid rgba(45, 74, 67, 0.08);
   border-radius: 16px;
   padding: 36px 32px 32px;
@@ -73,7 +73,7 @@
   font-family: var(--font-heading);
   font-size: 72px;
   font-weight: 600;
-  color: #2D4A43;
+  color: var(--color-theme);
   opacity: 0.12;
   line-height: 0.6;
   position: absolute;
@@ -89,7 +89,7 @@
   font-family: var(--font-heading);
   font-size: 17px;
   font-style: italic;
-  color: #2D4A43;
+  color: var(--color-theme);
   line-height: 1.75;
   margin: 0;
   flex-grow: 1;
@@ -135,14 +135,14 @@
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
-  color: #2D4A43;
+  color: var(--color-theme);
   letter-spacing: 0.2px;
 }
 
 .authorRole {
   font-family: var(--font-body);
   font-size: 12px;
-  color: #5A7A70;
+  color: var(--color-theme-light);
   letter-spacing: 0.2px;
 }
 

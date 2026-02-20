@@ -10,7 +10,7 @@
   font-family: var(--font-heading);
   font-size: 18px;
   font-style: italic;
-  color: #5A7A70;
+  color: var(--color-theme-light);
   margin: 12px auto 0;
   max-width: 500px;
   line-height: 1.6;

@@ -3,7 +3,7 @@
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.2em;
-  color: #8B5A3C;
+  color: var(--color-theme);
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 30px;

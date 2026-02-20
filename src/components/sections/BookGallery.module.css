@@ -1,7 +1,7 @@
 /* ========== BOOK GALLERY SECTION ========== */
 
 .section {
-  background-color: #F5EFE6;
+  background-color: var(--color-bg);
   padding: 40px 40px 60px;
   scroll-margin-top: 100px;
 }

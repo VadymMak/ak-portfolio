@@ -5,6 +5,8 @@ import { getLocale, getMessages } from "next-intl/server";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import ClientLayout from "@/components/layout/ClientLayout";
 import ChatWidget from "@/components/chat/ChatWidget";
+import ThemeProvider from "@/components/providers/ThemeProvider";
+
 import "@/styles/globals.css";
 
 // Fonts — matching current site exactly
@@ -131,10 +133,12 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <ClientLayout>{children}</ClientLayout>
-          <ChatWidget />
-        </NextIntlClientProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ClientLayout>{children}</ClientLayout>
+            <ChatWidget />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

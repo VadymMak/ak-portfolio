@@ -4,6 +4,123 @@
    Reset & Base
    ============================================ */
 
+/* ============================================
+   THEME VARIABLES — Add this to globals.css
+   Place at the TOP of the file, before other styles
+   ============================================ */
+
+/* ========== LIGHT THEME (default) ========== */
+:root,
+[data-theme="light"] {
+  /* Primary brand */
+  --color-theme: #2d4a43;
+  --color-theme-light: #5a7a70;
+  --color-theme-lighter: rgba(90, 122, 112, 0.08);
+
+  /* Backgrounds */
+  --color-bg: #f5efe6;
+  --color-bg-alt: #fefcf8;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+
+  /* Text */
+  --color-text: #3a3a3a;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+  --color-text-inverse: #f9f6f0;
+
+  /* Borders & dividers */
+  --color-border: rgba(90, 122, 112, 0.15);
+  --color-border-strong: rgba(90, 122, 112, 0.3);
+
+  /* Interactive */
+  --color-hover: rgba(90, 122, 112, 0.06);
+  --color-active: rgba(90, 122, 112, 0.12);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-chat: 0 8px 40px rgba(0, 0, 0, 0.15);
+
+  /* Header / Footer */
+  --color-header-bg: #2d4a43;
+  --color-header-text: #f9f6f0;
+  --color-footer-bg: #2d4a43;
+  --color-footer-text: #f9f6f0;
+
+  /* Blog */
+  --color-code-bg: #f4f1eb;
+  --color-blockquote-border: #5a7a70;
+  --color-table-header: #2d4a43;
+  --color-table-stripe: rgba(90, 122, 112, 0.04);
+  --color-table-hover: rgba(90, 122, 112, 0.08);
+
+  /* Chat */
+  --color-chat-user-bg: #2d4a43;
+  --color-chat-user-text: #f9f6f0;
+  --color-chat-assistant-bg: rgba(90, 122, 112, 0.08);
+  --color-chat-assistant-text: #3a3a3a;
+}
+
+/* ========== DARK THEME ========== */
+[data-theme="dark"] {
+  --color-theme: #7ba89c;
+  --color-theme-light: #9dc4b8;
+  --color-theme-lighter: rgba(123, 168, 156, 0.12);
+
+  --color-bg: #2a2f2e;
+  --color-bg-alt: #313837;
+  --color-surface: #3a4140;
+  --color-surface-elevated: #434b49;
+
+  --color-text: #e8e4df;
+  --color-text-secondary: #b0aca6;
+  --color-text-muted: #7a7672;
+  --color-text-inverse: #1a1f1e;
+
+  --color-border: rgba(123, 168, 156, 0.18);
+  --color-border-strong: rgba(123, 168, 156, 0.35);
+
+  --color-hover: rgba(123, 168, 156, 0.1);
+  --color-active: rgba(123, 168, 156, 0.18);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-chat: 0 8px 40px rgba(0, 0, 0, 0.6);
+
+  --color-header-bg: #151a19;
+  --color-header-text: #e8e4df;
+  --color-footer-bg: #151a19;
+  --color-footer-text: #e8e4df;
+
+  --color-code-bg: #2a3130;
+  --color-blockquote-border: #7ba89c;
+  --color-table-header: #313a38;
+  --color-table-stripe: rgba(123, 168, 156, 0.06);
+  --color-table-hover: rgba(123, 168, 156, 0.12);
+
+  --color-chat-user-bg: #7ba89c;
+  --color-chat-user-text: #1a1f1e;
+  --color-chat-assistant-bg: rgba(123, 168, 156, 0.12);
+  --color-chat-assistant-text: #e8e4df;
+}
+
+/* ========== SMOOTH TRANSITION ========== */
+html,
+body,
+header,
+footer,
+main,
+section,
+nav {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
 *,
 *::before,
 *::after {
@@ -42,7 +159,7 @@ h6 {
   font-family: var(--font-heading);
   font-weight: 500;
   line-height: 1.2;
-  color: var(--color-dark-green);
+  color: var(--color-theme);
 }
 
 h1 {
@@ -64,13 +181,13 @@ p {
 }
 
 a {
-  color: var(--color-soft-green);
+  color: var(--color-theme-light);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-dark-green);
+  color: var(--color-theme);
 }
 
 /* ============================================
@@ -99,8 +216,8 @@ button {
    ============================================ */
 
 ::selection {
-  background-color: var(--color-soft-green);
-  color: var(--color-white);
+  background-color: var(--color-theme-light);
+  color: var(--color-text-inverse);
 }
 
 /* ============================================
@@ -112,7 +229,7 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-warm-beige);
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -121,7 +238,7 @@ button {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-soft-green);
+  background: var(--color-theme-light);
 }
 
 /* ============================================
@@ -129,7 +246,7 @@ button {
    ============================================ */
 
 :focus-visible {
-  outline: 2px solid var(--color-soft-green);
+  outline: 2px solid var(--color-theme-light);
   outline-offset: 2px;
 }
 
@@ -207,6 +324,12 @@ button {
   visibility: hidden !important;
 }
 
+/* Protect images in dark mode */
+[data-theme="dark"] img {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
 /* ============================================
    Responsive
    ============================================ */

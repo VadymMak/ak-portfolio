@@ -6,14 +6,14 @@
   height: 100vh;
   display: flex;
   overflow-x: hidden;
-  background-color: #2D4A43;
+  background-color: var(--color-theme);
 }
 
 .mainContent {
   flex: 1;
   height: 100vh;
   overflow-y: auto;
-  background-color: #F5EFE6;
+  background-color: var(--color-bg);
   scrollbar-width: thin;
   scrollbar-color: rgba(201, 168, 108, 0.3) #2D4A43;
 }
@@ -24,7 +24,7 @@
 }
 
 .mainContent::-webkit-scrollbar-track {
-  background: #2D4A43;
+  background: var(--color-theme);
 }
 
 .mainContent::-webkit-scrollbar-thumb {

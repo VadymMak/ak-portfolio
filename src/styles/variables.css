@@ -1,23 +1,9 @@
 /* ============================================
    AK Portfolio v2 — Design Tokens
-   Colors, fonts, spacing from akillustrator.com
+   Non-color tokens: fonts, spacing, layout, etc.
+   Colors are defined in globals.css theme variables.
    ============================================ */
-
 :root {
-  /* Brand Colors */
-  --color-dark-green: #2D4A43;
-  --color-warm-beige: #F5EFE6;
-  --color-soft-green: #5A7A70;
-  --color-light-beige: #FEFCF8;
-  --color-accent: #2D4A43;
-  --color-text: #2D4A43;
-  --color-text-light: #5A7A70;
-  --color-text-muted: #8A9E97;
-  --color-border: #D4DCD8;
-  --color-white: #FFFFFF;
-  --color-error: #C53030;
-  --color-success: #2F855A;
-
   /* Typography */
   --font-heading: 'Cormorant Garamond', 'Georgia', serif;
   --font-body: 'Montserrat', 'Helvetica Neue', sans-serif;
@@ -48,12 +34,6 @@
   --max-width-blog-post: 760px;
   --header-height: 80px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(45, 74, 67, 0.08);
-  --shadow-md: 0 4px 12px rgba(45, 74, 67, 0.1);
-  --shadow-lg: 0 8px 24px rgba(45, 74, 67, 0.12);
-  --shadow-xl: 0 16px 48px rgba(45, 74, 67, 0.15);
-
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -74,4 +54,8 @@
   --z-modal: 400;
   --z-chat: 500;
   --z-toast: 600;
+
+  /* Legacy aliases (for compatibility) */
+  --color-error: #C53030;
+  --color-success: #2F855A;
 }

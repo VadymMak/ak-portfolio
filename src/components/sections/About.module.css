@@ -152,7 +152,7 @@
   .section {
     padding: 0;
     min-height: auto;
-    background-color: #F5EFE6;
+    background-color: var(--color-bg);
   }
 
   .mobileImageWrapper {
@@ -174,7 +174,7 @@
 
   .mobileTextWrapper {
     padding: 40px 30px;
-    background-color: #F5EFE6;
+    background-color: var(--color-bg);
   }
 
   .mobileTitleWrapper {
@@ -190,7 +190,7 @@
   .mobileText {
     font-family: var(--font-heading);
     font-size: 16px;
-    color: #2D4A43;
+    color: var(--color-theme);
     line-height: 1.8;
     text-align: justify;
     margin-bottom: 16px;

@@ -32,7 +32,7 @@
 .descriptionText {
   font-family: var(--font-heading);
   font-size: 16px;
-  color: #2D4A43;
+  color: var(--color-theme);
   line-height: 1.8;
   text-align: justify;
 }
@@ -48,7 +48,7 @@
 /* ========== SERVICE CARD ========== */
 
 .card {
-  background-color: #F9F6F0;
+  background-color: var(--color-bg);
   border: 1px solid rgba(45, 74, 67, 0.08);
   border-radius: 16px;
   padding: 36px 28px;
@@ -71,7 +71,7 @@
 .cardIcon {
   width: 56px;
   height: 56px;
-  color: #2D4A43;
+  color: var(--color-theme);
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -85,7 +85,7 @@
   font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 600;
-  color: #2D4A43;
+  color: var(--color-theme);
   margin: 0;
   letter-spacing: 0.3px;
 }
@@ -93,7 +93,7 @@
 .cardDesc {
   font-family: var(--font-body);
   font-size: 13px;
-  color: #5A7A70;
+  color: var(--color-theme-light);
   line-height: 1.7;
   margin: 0;
   flex-grow: 1;
@@ -105,7 +105,7 @@
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #2D4A43;
+  color: var(--color-theme);
   background: none;
   border: 1px solid rgba(45, 74, 67, 0.25);
   border-radius: 8px;
@@ -116,9 +116,9 @@
 }
 
 .cardButton:hover {
-  background-color: #2D4A43;
+  background-color: var(--color-theme);
   color: #ffffff;
-  border-color: #2D4A43;
+  border-color: var(--color-theme);
 }
 
 /* ========== CONTACT FORM BLOCK ========== */
@@ -127,7 +127,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 60px 48px;
-  background-color: #F9F6F0;
+  background-color: var(--color-bg);
   border-radius: 20px;
   border: 1px solid rgba(45, 74, 67, 0.08);
 }
@@ -141,14 +141,14 @@
   font-family: var(--font-heading);
   font-size: 32px;
   font-weight: 600;
-  color: #2D4A43;
+  color: var(--color-theme);
   margin: 0 0 12px;
 }
 
 .formSubtitle {
   font-family: var(--font-body);
   font-size: 14px;
-  color: #5A7A70;
+  color: var(--color-theme-light);
   margin: 0;
   line-height: 1.6;
 }
@@ -178,7 +178,7 @@
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
-  color: #2D4A43;
+  color: var(--color-theme);
   letter-spacing: 0.8px;
   text-transform: uppercase;
 }
@@ -188,8 +188,8 @@
 .formTextarea {
   font-family: var(--font-body);
   font-size: 14px;
-  color: #2D4A43;
-  background-color: #ffffff;
+  color: var(--color-theme);
+  background-color: var(--color-surface);
   border: 1px solid rgba(45, 74, 67, 0.15);
   border-radius: 10px;
   padding: 14px 16px;
@@ -208,7 +208,7 @@
 .formInput:focus,
 .formSelect:focus,
 .formTextarea:focus {
-  border-color: #2D4A43;
+  border-color: var(--color-theme);
   box-shadow: 0 0 0 3px rgba(45, 74, 67, 0.08);
 }
 
@@ -235,7 +235,7 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #ffffff;
-  background-color: #2D4A43;
+  background-color: var(--color-theme);
   border: 2px solid #2D4A43;
   border-radius: 10px;
   padding: 16px 40px;
@@ -269,7 +269,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background-color: #2D4A43;
+  background-color: var(--color-theme);
   color: #ffffff;
   font-size: 28px;
   display: flex;
@@ -282,14 +282,14 @@
   font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 600;
-  color: #2D4A43;
+  color: var(--color-theme);
   margin: 0 0 12px;
 }
 
 .successText {
   font-family: var(--font-body);
   font-size: 14px;
-  color: #5A7A70;
+  color: var(--color-theme-light);
   line-height: 1.6;
   margin: 0;
 }

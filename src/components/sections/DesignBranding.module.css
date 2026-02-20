@@ -17,7 +17,7 @@
   font-family: var(--font-heading);
   font-size: 18px;
   font-style: italic;
-  color: #5A7A70;
+  color: var(--color-theme-light);
   margin: 12px auto 0;
   line-height: 1.6;
   letter-spacing: 0.3px;
@@ -38,7 +38,7 @@
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #5A7A70;
+  color: var(--color-theme-light);
   background: none;
   border: 1.5px solid rgba(45, 74, 67, 0.15);
   border-radius: 30px;
@@ -48,15 +48,15 @@
 }
 
 .tab:hover {
-  color: #2D4A43;
+  color: var(--color-theme);
   border-color: rgba(45, 74, 67, 0.35);
   background-color: rgba(45, 74, 67, 0.04);
 }
 
 .tabActive {
   color: #ffffff;
-  background-color: #2D4A43;
-  border-color: #2D4A43;
+  background-color: var(--color-theme);
+  border-color: var(--color-theme);
 }
 
 .tabActive:hover {
