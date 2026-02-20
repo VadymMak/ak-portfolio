@@ -4,13 +4,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import ClientLayout from "@/components/layout/ClientLayout";
-import dynamic from "next/dynamic";
 import ThemeProvider from "@/components/providers/ThemeProvider";
+import ChatWidget from "@/components/chat/ChatWidget";
 import "@/styles/globals.css";
-
-const ChatWidget = dynamic(() => import("@/components/chat/ChatWidget"), {
-  ssr: false,
-});
 
 // Fonts — matching current site exactly
 const cormorantGaramond = Cormorant_Garamond({
