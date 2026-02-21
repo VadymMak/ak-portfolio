@@ -168,24 +168,28 @@
   margin-top: 2.5rem;
 }
 
+/* Нужно: */
 .viewAllBtn {
   display: inline-block;
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  color: var(--color-theme);
-  padding: 0.75rem 2.5rem;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-text-inverse);
+  padding: 14px 40px;
+  background: var(--color-theme);
   border: 1.5px solid var(--color-theme);
-  border-radius: 6px;
+  border-radius: 30px;
   text-decoration: none;
-  letter-spacing: 0.06em;
   transition:
     background 0.3s,
-    color 0.3s,
     transform 0.2s;
 }
 
 .viewAllBtn:hover {
-  background: var(--color-theme);
+  background: #3a5e55;
+  border-color: #3a5e55;
   color: var(--color-text-inverse);
   transform: translateY(-2px);
 }

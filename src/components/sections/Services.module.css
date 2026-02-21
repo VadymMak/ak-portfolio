@@ -57,9 +57,10 @@
   align-items: center;
   text-align: center;
   gap: 16px;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              border-color 0.4s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.4s ease;
 }
 
 .card:hover {
@@ -73,7 +74,9 @@
   height: 56px;
   color: var(--color-theme);
   opacity: 0.7;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .card:hover .cardIcon {
@@ -111,7 +114,10 @@
   border-radius: 8px;
   padding: 10px 24px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
   margin-top: 8px;
 }
 
@@ -193,7 +199,9 @@
   border: 1px solid rgba(45, 74, 67, 0.15);
   border-radius: 10px;
   padding: 14px 16px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
   outline: none;
   width: 100%;
   box-sizing: border-box;
@@ -201,7 +209,7 @@
 
 .formInput::placeholder,
 .formTextarea::placeholder {
-  color: #A0B5AD;
+  color: #a0b5ad;
   font-size: 13px;
 }
 
@@ -236,17 +244,19 @@
   text-transform: uppercase;
   color: #ffffff;
   background-color: var(--color-theme);
-  border: 2px solid #2D4A43;
-  border-radius: 10px;
+  border: 2px solid #2d4a43;
+  border-radius: 30px;
   padding: 16px 40px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
   align-self: center;
   margin-top: 8px;
 }
 
 .submitButton:hover {
-  background-color: #3D5E55;
+  background-color: #3d5e55;
 }
 
 .submitButton:active {
