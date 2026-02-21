@@ -12,6 +12,7 @@ export function useScrollNavigation() {
   const pathname = usePathname();
   const isHome = pathname === '/';
   const isOnBlog = pathname.startsWith('/blog');
+  const isOnDesign = pathname.startsWith('/design');
 
   const scrollToSection = useCallback(
     (sectionId: string) => {
@@ -39,10 +40,16 @@ export function useScrollNavigation() {
     router.push('/blog');
   }, [router]);
 
+  const navigateToDesign = useCallback(() => {
+    router.push('/design');
+  }, [router]);
+
   return {
     scrollToSection,
     navigateToBlog,
+    navigateToDesign,
     isHome,
     isOnBlog,
+    isOnDesign,
   };
 }

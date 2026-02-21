@@ -19,7 +19,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const { currentLanguage, availableLanguages, changeLanguage, getCurrentLanguageLabel } =
     useLanguage();
   const t = useTranslations();
-  const { scrollToSection: scrollTo, navigateToBlog, isOnBlog } = useScrollNavigation();
+  const { scrollToSection: scrollTo, navigateToBlog, navigateToDesign, isOnBlog, isOnDesign } = useScrollNavigation();
 
   // Book projects with translations
   const bookProjects = [
@@ -40,6 +40,11 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const handleBlogClick = () => {
     onClose();
     setTimeout(() => navigateToBlog(), 300);
+  };
+
+  const handleDesignClick = () => {
+    onClose();
+    setTimeout(() => navigateToDesign(), 300);
   };
 
   const handleLanguageChange = (code: string) => {
@@ -168,7 +173,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 </AnimatePresence>
               </motion.li>
 
-              {/* Design & Branding */}
+              {/* Design & Branding — navigates to /design */}
               <motion.li
                 className={styles.menuItem}
                 initial={{ opacity: 0, y: 20 }}
@@ -176,8 +181,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 transition={{ delay: 0.2 }}
               >
                 <button
-                  onClick={() => scrollToSection('design-branding')}
-                  className={styles.menuItemButton}
+                  onClick={handleDesignClick}
+                  className={`${styles.menuItemButton} ${isOnDesign ? styles.active : ''}`}
                 >
                   {t('menu.designBranding')}
                 </button>

@@ -14,7 +14,7 @@ export default function DesktopMenu() {
   const { currentLanguage, availableLanguages, changeLanguage, getCurrentLanguageLabel } =
     useLanguage();
   const t = useTranslations();
-  const { scrollToSection, navigateToBlog, isOnBlog } = useScrollNavigation();
+  const { scrollToSection, navigateToBlog, navigateToDesign, isOnBlog, isOnDesign } = useScrollNavigation();
 
   // Book projects with translations
   const bookProjects = [
@@ -112,11 +112,11 @@ export default function DesktopMenu() {
             </AnimatePresence>
           </li>
 
-          {/* Design & Branding */}
+          {/* Design & Branding — now navigates to /design page */}
           <li className={styles.menuItem}>
             <button
-              onClick={() => scrollToSection('design-branding')}
-              className={styles.menuButton}
+              onClick={navigateToDesign}
+              className={`${styles.menuButton} ${isOnDesign ? styles.active : ''}`}
             >
               {t('menu.designBranding')}
             </button>

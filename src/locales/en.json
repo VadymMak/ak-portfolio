@@ -6,7 +6,110 @@
     "contactMe": "Contact Me",
     "blog": "Blog",
     "services": "Services",
-    "testimonials": "Referencie"
+    "testimonials": "Referencie",
+    "design": "Design Portfolio"
+  },
+  "designPage": {
+    "hero": {
+      "label": "Graphic Design & Branding",
+      "titlePre": "Design that makes your brand",
+      "titleEm": "unforgettable",
+      "description": "Logo design, brand identity, packaging, labels, and visual communication for businesses across Europe. Based in Slovakia, working worldwide.",
+      "statProjects": "Projects",
+      "statYears": "Years",
+      "statSatisfaction": "Satisfaction",
+      "cardLabels": "Label Design",
+      "cardRestaurant": "Restaurant Identity",
+      "cardBrandbook": "Brandbook"
+    },
+    "services": {
+      "label": "What I Do",
+      "title": "Comprehensive design solutions for your brand",
+      "logo": {
+        "name": "Logo Design",
+        "desc": "Distinctive logos that capture your brand essence. Concept development, refinements, and complete file package."
+      },
+      "brand": {
+        "name": "Brand Identity",
+        "desc": "Full visual identity — logo, colors, typography, guidelines. Everything for consistent brand recognition."
+      },
+      "packaging": {
+        "name": "Label & Packaging",
+        "desc": "Product labels and packaging that stand out on the shelf. Designed for print production."
+      },
+      "restaurant": {
+        "name": "Menu & Restaurant",
+        "desc": "Restaurant menus, signage, and visual identity that elevate the dining experience."
+      },
+      "print": {
+        "name": "Print Design",
+        "desc": "Business cards, flyers, brochures, posters. Professional layouts ready for printing."
+      },
+      "social": {
+        "name": "Social Media",
+        "desc": "Branded templates and visual content for Instagram, Facebook, and LinkedIn."
+      }
+    },
+    "portfolio": {
+      "label": "Selected Work",
+      "title": "Projects that speak for themselves",
+      "filter": {
+        "all": "All",
+        "branding": "Branding",
+        "labels": "Labels",
+        "logo": "Logo",
+        "restaurant": "Restaurant",
+        "print": "Print"
+      }
+    },
+    "process": {
+      "label": "How I Work",
+      "title": "From brief to final files",
+      "brief": {
+        "name": "Brief & Research",
+        "desc": "We discuss your business, goals, and audience. I study your market to create design that works."
+      },
+      "concepts": {
+        "name": "Concepts",
+        "desc": "2–3 design directions with mood boards. You choose the one that resonates with your vision."
+      },
+      "refinement": {
+        "name": "Refinement",
+        "desc": "We perfect the chosen concept together. Colors, typography, every detail. 2 revision rounds included."
+      },
+      "delivery": {
+        "name": "Delivery",
+        "desc": "Print-ready and digital files in all formats, plus guidelines for consistent application."
+      }
+    },
+    "testimonials": {
+      "label": "Client Stories",
+      "title": "What clients say",
+      "starfood": {
+        "text": "Anastasiia created our complete brand identity from scratch. The labels she designed helped our products stand out on the shelf immediately.",
+        "author": "Star Food",
+        "role": "Food Production Company"
+      },
+      "baloonparty": {
+        "text": "The brandbook exceeded our expectations. Every detail was thought through — from logo variations to color guidelines.",
+        "author": "Baloon Party",
+        "role": "Event & Party Supplies"
+      },
+      "lasercraft": {
+        "text": "What started as a logo design turned into a full partnership. Anastasiia understands our brand deeply.",
+        "author": "Laser Craft",
+        "role": "Craft & Design Studio"
+      }
+    },
+    "cta": {
+      "titlePre": "Ready to make your brand",
+      "titleEm": "stand out?",
+      "description": "Tell me about your project — I'll respond within 24 hours with initial ideas and a personalized quote.",
+      "button": "Start a Project",
+      "detailConsult": "Free initial consultation",
+      "detailLocation": "Based in Trenčín, Slovakia",
+      "detailEurope": "Working across Europe"
+    }
   },
   "booksIntro": {
     "title": "Children's Book Illustrations",
